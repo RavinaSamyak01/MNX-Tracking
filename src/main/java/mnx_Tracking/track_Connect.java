@@ -1,12 +1,13 @@
-package MNX_Tracking;
-
-import MNX_BasePackage.BaseInit;
+package mnx_Tracking;
 
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-
+import java.util.List;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import org.apache.poi.EncryptedDocumentException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -19,6 +20,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
+import mnx_BasePackage.BaseInit;
+
 public class track_Connect extends BaseInit {
 
 	public void oc_Connect() throws Exception {
@@ -26,6 +29,16 @@ public class track_Connect extends BaseInit {
 		login();
 
 		orderCreation();
+
+		logOut();
+
+	}
+
+	public void oCancel_Connect() throws Exception {
+
+		login();
+
+		job_cancel(1);
 
 		logOut();
 
@@ -46,12 +59,12 @@ public class track_Connect extends BaseInit {
 			try {
 				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.className("login")));
 				String UserName = storage.getProperty("ConnectPRODUserName");
-				highLight(isElementPresent("UserName_id"), driver);
-				isElementPresent("UserName_id").sendKeys(UserName);
+				highLight(isElementPresent("ConUserName_id"), driver);
+				isElementPresent("ConUserName_id").sendKeys(UserName);
 				logs.info("Entered UserName");
 				String Password = storage.getProperty("ConnectPRODPassword");
-				highLight(isElementPresent("Password_id"), driver);
-				isElementPresent("Password_id").sendKeys(Password);
+				highLight(isElementPresent("ConPassword_id"), driver);
+				isElementPresent("ConPassword_id").sendKeys(Password);
 				logs.info("Entered Password");
 			} catch (Exception e) {
 				msg.append("URL is not working==FAIL");
@@ -70,7 +83,7 @@ public class track_Connect extends BaseInit {
 					 * , subject, msg.toString(), File);
 					 */
 
-					MNX_BasePackage.SendEmail.sendMail("ravina.prajapati@samyak.com", subject, msg.toString(), File);
+					mnx_BasePackage.SendEmail.sendMail("ravina.prajapati@samyak.com", subject, msg.toString(), File);
 
 				} catch (Exception ex) {
 					logs.error(ex);
@@ -81,8 +94,8 @@ public class track_Connect extends BaseInit {
 
 		// BaseURL = baseUrl;
 		msg.append("URL==" + baseUrl + "\n");
-		highLight(isElementPresent("Login_id"), driver);
-		isElementPresent("Login_id").click();
+		highLight(isElementPresent("ConLogin_id"), driver);
+		isElementPresent("ConLogin_id").click();
 		logs.info("Login done");
 		getScreenshot(driver, "ConnectLogin");
 		try {
@@ -659,6 +672,7 @@ public class track_Connect extends BaseInit {
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
 			Thread.sleep(1500);
 			try {
+				EditOrder = isElementPresent("OCEditOrder_id");
 				act.moveToElement(EditOrder).build().perform();
 				EditOrder.click();
 			} catch (Exception ee) {
@@ -683,6 +697,651 @@ public class track_Connect extends BaseInit {
 			logs.info("Issue in Create Order");
 			getScreenshot(driver, "CreateOrderIssue");
 		}
+
+	}
+
+	public void job_cancel(int i) throws Exception {
+
+		// WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));//
+		// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 60);// wait time
+		Actions act = new Actions(driver);
+		WebDriverWait wait2 = new WebDriverWait(driver, 10);//
+
+		String Env = storage.getProperty("Env");
+		logs.info("Start process for job cancel");
+		msg.append("Start process for job cancel" + "\n");
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+		Thread.sleep(1500);
+
+		// --Search the Job
+		searchJob(i);
+
+		// --Go to Edit Job tab
+		WebElement EditOrTab = isElementPresent("EOEditOrderTab_id");
+		act.moveToElement(EditOrTab).build().perform();
+		wait.until(ExpectedConditions.elementToBeClickable(EditOrTab));
+		act.moveToElement(EditOrTab).click().perform();
+		logs.info("Click on Edit Order Tab");
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+		Thread.sleep(1500);
+
+		// -- select Cancel Job : Cancel/NC
+		WebElement cancel_nc_drp_down = isElementPresent("job_type_cancel_id");
+		act.moveToElement(cancel_nc_drp_down).build().perform();
+		Thread.sleep(1500);
+		Select cancel_nc = new Select(isElementPresent("job_type_cancel_id"));
+		cancel_nc.selectByVisibleText("CANCEL/NC");
+		logs.info("Select job type : CANCEL/NC");
+		Thread.sleep(2000);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+		getScreenshot(driver, "Select_canceljob_" + i);
+
+		// --Click on Save Changes
+
+		WebElement Savechanges = isElementPresent("TLSaveChanges_id");
+		wait.until(ExpectedConditions.visibilityOf(Savechanges));
+		act.moveToElement(Savechanges).build().perform();
+		wait.until(ExpectedConditions.elementToBeClickable(Savechanges));
+		js.executeScript("arguments[0].click();", Savechanges);
+		Thread.sleep(5000);
+		logs.info("Clicked on Save Changes button");
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+		// --Click yes for cancel cnfm
+
+		Thread.sleep(2000);
+		WebElement job_cance_cnfm = isElementPresent("BTNOk_id");
+		job_cance_cnfm.click();
+		logs.info("Clicked on ok for cancel job confirmation");
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+		// -- enter cancel note
+
+		WebElement cancel_note = isElementPresent("cancel_note_xpath");
+		cancel_note.sendKeys("cancel_note_xpath");
+		logs.info("Entering Cancellation description");
+		getScreenshot(driver, "canceljob_description_" + i);
+
+		// -- Click on ok to final cancel job
+
+		Thread.sleep(1500);
+		WebElement job_cancel_cnfm = isElementPresent("BTNOk_id");
+		job_cancel_cnfm.click();
+		logs.info("Click on Ok for Final Job cancel Confirmation");
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+		Thread.sleep(2000);
+		getScreenshot(driver, "job_cancel_" + i);
+
+		// -- additinal popup for change ready time after cancellation process
+		try {
+
+			WebElement cnfm_popup_redy_time = isElementPresent("redy_time_change_popup_xpath");
+			if (cnfm_popup_redy_time.isDisplayed()) {
+
+				WebElement redy_time_change_yes = isElementPresent("TLDPUOK_id");
+
+				js.executeScript("arguments[0].click();", redy_time_change_yes);
+				logs.info("Click on No button for change ready time popup");
+
+				// - -Click on SAve changes button
+
+				WebElement save_changes = isElementPresent("TLSaveChanges_id");
+				js.executeScript("arguments[0].scrollIntoView(true);", save_changes);
+				js.executeScript("arguments[0].click();", save_changes);
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				Thread.sleep(1500);
+				logs.info("Click on Save Changes button");
+
+			}
+
+		}
+
+		catch (Exception e) {
+			// TODO: handle exception
+			logs.info("no addidtional popup up is display");
+		}
+
+		// -- validate job is cancel or not by reropen and verify it's title
+
+		searchallJob(i);
+
+		String Job_status = isElementPresent("TLStageLable_id").getText();
+		logs.info("Fetched Job status is : " + Job_status);
+		WebElement cancel_nc_nav = isElementPresent("job_type_cancel_id");
+		act.moveToElement(cancel_nc_nav).build().perform();
+		getScreenshot(driver, "final_job_status_" + i);
+		Thread.sleep(1500);
+		getScreenshot(driver, "canceljob_type_" + i);
+
+		if (Env.equalsIgnoreCase("PROD")) {
+
+			if (Job_status.equalsIgnoreCase("CANCEL")) {
+				logs.info("job is cancelled");
+				logs.info("job cancel process == PASS");
+				getStageName();
+				logs.info("Job Cancellation Process == pass");
+				msg.append("Job Cancellation Process == PASS" + "\n");
+			}
+
+			// -- re-attempt to cancel job
+			else {
+
+				Select cancel_ncs = new Select(isElementPresent("job_type_cancel_id"));
+				cancel_ncs.selectByVisibleText("CANCEL/NC");
+				logs.info("Select job type : CANCEL/NC");
+				Thread.sleep(1500);
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				getScreenshot(driver, "Select_canceljob_" + i);
+				// --Click on Save Changes
+				isElementPresent("TLSaveChanges_id").click();
+				logs.info("Clicked on Save Changes button");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				// --Click yes for cancel cnfm
+
+				Thread.sleep(1500);
+				WebElement job_cance_cnfm1 = isElementPresent("BTNOk_id");
+				job_cance_cnfm1.click();
+				logs.info("Clicked on ok for cancel job confirmation");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				// -- enter cancel note
+
+				WebElement cancel_note1 = isElementPresent("cancel_note_xpath");
+				cancel_note1.sendKeys("cancel_note_xpath");
+				logs.info("Entering Cancellation description");
+				getScreenshot(driver, "canceljob_description_" + i);
+
+				// -- Click on ok to final cancel job
+
+				Thread.sleep(1500);
+				WebElement job_cancel_cnfm1 = isElementPresent("BTNOk_id");
+				job_cancel_cnfm1.click();
+				logs.info("Click on Ok for Final Job cancel Confirmation");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				// -- additinal popup for change ready time after cancellation process
+				try {
+
+					WebElement cnfm_popup_redy_time = isElementPresent("redy_time_change_popup_xpath");
+					if (cnfm_popup_redy_time.isDisplayed()) {
+
+						WebElement redy_time_change_yes = isElementPresent("TLDPUOK_id");
+
+						js.executeScript("arguments[0].click();", redy_time_change_yes);
+						logs.info("Click on No button for change ready time popup");
+
+						// - -Click on SAve changes button
+
+						WebElement save_changes = isElementPresent("TLSaveChanges_id");
+						js.executeScript("arguments[0].scrollIntoView(true);", save_changes);
+						js.executeScript("arguments[0].click();", save_changes);
+						wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+						Thread.sleep(1500);
+						logs.info("Click on Save Changes button");
+
+					}
+
+				}
+
+				catch (Exception e) {
+					// TODO: handle exception
+					logs.info("no addidtional popup up is display");
+				}
+
+				open_pickup_frm_tasklog(i);
+				// -- validate job is cancel or not by reropen and verify it's title
+
+				String Job_statuses = getStageName();
+
+				WebElement cancel_nc1 = isElementPresent("job_type_cancel_id");
+				act.moveToElement(cancel_nc1).build().perform();
+
+				Thread.sleep(1500);
+				getScreenshot(driver, "canceljob_type_" + i);
+
+				if (Job_statuses.equalsIgnoreCase("CANCEL")) {
+					logs.info("job is cancelled");
+					setData("Test_Case", i, 6, Job_status + " -PASS");
+					setData("Test_Case", i, 2, "PASS");
+				}
+
+				else {
+
+					logs.info("job is not cancelled == Fail");
+					setData("Test_Case", i, 6, Job_status + " - FAIL");
+					setData("Test_Case", i, 2, "FAIL");
+					msg.append("Job cancel == FAIL" + "\n");
+				}
+
+			}
+		}
+
+		else if (Env.equalsIgnoreCase("STG") || Env.equalsIgnoreCase("TEST")) {
+
+			logs.info("Do not process for job cancelaltion");
+
+		}
+
+	}
+
+	public void open_pickup_frm_tasklog(int i)
+			throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
+		WebDriverWait wait = new WebDriverWait(driver, 40);// wait time
+		Actions act = new Actions(driver);
+		WebDriverWait wait2 = new WebDriverWait(driver, 60);// wait time
+		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
+
+		try {
+			// Go To Operations
+			WebElement operations = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("a_operations")));
+			act.moveToElement(operations).click().perform();
+			wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+			// Go to TaskLog
+			WebElement taskLog = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("a_TaskLog")));
+			taskLog.click();
+			wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+			// Enter pickUpID
+			String pickupidSeg = getData("Test_Case", i, 6);
+			logs.info("Pickup ID use for verification is : " + pickupidSeg);
+			wait.until(ExpectedConditions.elementToBeClickable(By.id("txtContains")));
+			WebElement tlSearch = isElementPresent("TLSearch_id");
+			tlSearch.clear();
+			tlSearch.sendKeys(pickupidSeg);
+			logs.info("Pickup id entered in search box");
+
+			// Click on search button for pickup search
+			WebElement searchButton = isElementPresent("TLSearchButton_id");
+			searchButton.click();
+			wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+			List<WebElement> totalResult = driver.findElements(By.xpath("//span[@class='dx-checkbox-icon']"));
+			int size = totalResult.size();
+
+			if (size > 1) {
+				WebElement pickupIdTask = driver
+						.findElement(By.xpath("//label[contains(text(),'" + pickupidSeg + "')]"));
+				act.moveToElement(pickupIdTask).click().perform();
+				logs.info("Appropriate Job selected from multiple jobs");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+			} else {
+				logs.info("Multiple jobs not visible for the entered pickup id in taskbar");
+			}
+		} catch (Exception e) {
+			logs.info("Error in opening tasklog: " + e);
+		}
+	}
+
+	public void searchJob(int i) throws Exception {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
+		WebDriverWait wait = new WebDriverWait(driver, 30);// wait time
+
+		WebDriverWait wait1 = new WebDriverWait(driver, 10);
+		Actions act = new Actions(driver);
+
+		String Env = storage.getProperty("Env");
+		try {
+			try {
+				// Enter JobID#
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				// wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				// wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("txtContains")));
+				wait1.until(ExpectedConditions.elementToBeClickable(By.id("txtContains")));
+
+				String PUID = getData("Connect", i, 32);
+
+				isElementPresent("TLSearch_id").clear();
+				isElementPresent("TLSearch_id").sendKeys(PUID);
+				isElementPresent("TLSearch_id").sendKeys(Keys.TAB);
+
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				WebElement Search = isElementPresent("TLSearchButton_id");
+				wait1.until(ExpectedConditions.elementToBeClickable(Search));
+				jse.executeScript("arguments[0].click();", Search);
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				try {
+					getScreenshot(driver, "H3PJob_After_TenderTo3P");
+
+					List<WebElement> Jobs = driver.findElements(
+							By.xpath("//*[contains(@aria-label,'Pickup #,')]//label[@id=\"lblDateTime\"]"));
+					for (int job = 0; job < Jobs.size(); job++) {
+						String PickupID = Jobs.get(job).getText();
+						String PickID = null;
+
+						if (PickupID.startsWith("N")) {
+							String[] PickValue = PickupID.split("N");
+							PickID = PickValue[1];
+						} else if (PickupID.startsWith("F")) {
+							String[] PickValue = PickupID.split("F");
+							PickID = PickValue[1];
+						} else if (PickupID.startsWith("R")) {
+							String[] PickValue = PickupID.split("R");
+							PickID = PickValue[1];
+						}
+
+						logs.info("Searched PickUpID==" + PickID);
+						PUID = getData("Sheet1", i, 32);
+						if (PickID.equalsIgnoreCase(PUID)) {
+							Jobs.get(job).click();
+							wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+						}
+
+					}
+
+					/*
+					 * // --Click on Job Name WebElement JobName =
+					 * isElementPresent("TLH3PJobName_id");
+					 * wait1.until(ExpectedConditions.elementToBeClickable(JobName));
+					 * JobName.click(); logs.info("Clicked on Job Name");
+					 * wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")
+					 * ));
+					 */
+					logs.info("Same job is displayed with 2 status==PASS");
+					// msg.append("Same job is displayed with 2 status==PASS" + "\n");
+
+					// --Get StageName
+				} catch (Exception eTenderTo3P) {
+					logs.info("Same job is not displayed with 2 status");
+					// msg.append("Same job is not displayed with 2 status" + "\n");
+
+					// --Get StageName
+
+				}
+
+			} catch (Exception eTasklog) {
+				// --Go To Operations
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("a_operations")));
+				WebElement Operations = isElementPresent("Operations_id");
+				act.moveToElement(Operations).click().perform();
+				logs.info("Clicked on Operations");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+						By.xpath("//*[@class=\"OpenCloseClass dropdown open\"]//ul")));
+
+				// --Go to TaskLog
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("a_TaskLog")));
+				isElementPresent("OpTaskLog_id").click();
+				logs.info("Clicked on TaskLog");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				getScreenshot(driver, "TaskLog");
+
+				// Enter JobID#
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				String PUID = getData("Connect", i, 32);
+
+				logs.info("PickUpID=" + PUID + "\n");
+				isElementPresent("TLSearch_id").clear();
+				isElementPresent("TLSearch_id").sendKeys(PUID);
+				isElementPresent("TLSearch_id").sendKeys(Keys.TAB);
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				WebElement Search = isElementPresent("TLSearchButton_id");
+				wait1.until(ExpectedConditions.elementToBeClickable(Search));
+				jse.executeScript("arguments[0].click();", Search);
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				try {
+					getScreenshot(driver, "H3PJob_After_TenderTo3P");
+
+					List<WebElement> Jobs = driver.findElements(
+							By.xpath("//*[contains(@aria-label,'Pickup #,')]//label[@id=\"lblDateTime\"]"));
+					for (int job = 0; job < Jobs.size(); job++) {
+						String PickupID = Jobs.get(job).getText();
+						String[] PickValue = PickupID.split("N");
+						String PickID = PickValue[1];
+						logs.info("Searched PickUpID==" + PickID);
+						if (PickID.equalsIgnoreCase(PUID)) {
+							Jobs.get(job).click();
+							wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+						}
+
+						/*
+						 * // --Click on Job Name WebElement JobName =
+						 * isElementPresent("TLH3PJobName_id");
+						 * wait1.until(ExpectedConditions.elementToBeClickable(JobName));
+						 * JobName.click(); logs.info("Clicked on Job Name");
+						 * wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")
+						 * ));
+						 */
+						logs.info("Same job is displayed with 2 status opt relevent == PASS");
+						// msg.append("Same job is displayed with 2 status==PASS" + "\n");
+					}
+					// --Get StageName
+				} catch (Exception e) {
+					logs.info("Same job is not displayed with 2 status");
+					// msg.append("Same job is not displayed with 2 status" + "\n");
+
+					// --Get StageName
+
+				}
+
+			}
+
+			if (Env.equalsIgnoreCase("STG")) {
+				setResultData("Result", 22, 4, "PASS");
+
+			}
+
+		} catch (Exception ewait) {
+			getScreenshot(driver, "SearchJobError" + i);
+			String Error = ewait.getMessage();
+			setResultData("Result", 22, 4, "FAIL");
+			setResultData("Result", 22, 5, Error);
+
+		}
+
+	}
+
+	public void searchallJob(int i) throws Exception {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
+		WebDriverWait wait = new WebDriverWait(driver, 30);// wait time
+
+		WebDriverWait wait1 = new WebDriverWait(driver, 10);
+		Actions act = new Actions(driver);
+
+		String Env = storage.getProperty("Env");
+		try {
+			try {
+
+				// --Go To Operations
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("a_operations")));
+				WebElement Operations = isElementPresent("OperationsTab_id");
+				act.moveToElement(Operations).build().perform();
+				act.moveToElement(Operations).click().perform();
+				logs.info("Clicked on Operations");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+						By.xpath("//*[@class=\"OpenCloseClass dropdown open\"]//ul")));
+
+				// --Go to TaskLog
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("a_TaskLog")));
+				isElementPresent("TaskLog_id").click();
+				logs.info("Clicked on TaskLog");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				getScreenshot(driver, "TaskLog");
+
+				// --Zoom Out
+				jse.executeScript("document.body.style.zoom='90%';");
+				Thread.sleep(2000);
+
+				// --Go to Search All Job
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("hlkOrderSearch")));
+				WebElement SearchAllJob = isElementPresent("TLSearchAllJob_id");
+				act.moveToElement(SearchAllJob).build().perform();
+				jse.executeScript("arguments[0].click();", SearchAllJob);
+				logs.info("Clicked on SearchAllJobs");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("AdvancesSearch")));
+
+				// --Zoom In
+				jse.executeScript("document.body.style.zoom='100%';");
+				Thread.sleep(2000);
+
+				// --Reset button
+				isElementPresent("RLReset_id").click();
+				logs.info("Clicked on Reset button");
+
+				// --Set Origin FRom Date
+				WebElement OFromDate = isElementPresent("TLOrderRFrom_id");
+				OFromDate.clear();
+				Date date = new Date();
+				DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				logs.info(dateFormat.format(date));
+				OFromDate.sendKeys(dateFormat.format(date));
+				OFromDate.sendKeys(Keys.TAB);
+				logs.info("Entered Origin From Date");
+
+				// --Set Origin To Date
+				WebElement OToDate = isElementPresent("TLOrderRTo_id");
+				OToDate.clear();
+				date = new Date();
+				dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				logs.info(dateFormat.format(date));
+				OToDate.sendKeys(dateFormat.format(date));
+				OToDate.sendKeys(Keys.TAB);
+				logs.info("Entered Origin From Date");
+
+				String PUID = getData("Connect", i, 32);
+				isElementPresent("TLSAllJPickup_id").sendKeys(PUID);
+				logs.info("Entered RouteTrackingID : " + PUID);
+
+				// --Click on Search
+				wait.until(ExpectedConditions.elementToBeClickable(By.id("btnSearch")));
+				isElementPresent("RLSearch_id").click();
+				logs.info("Click on Search button");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				String JobID = "lblJobIdValue_0";
+
+				// ---Select Record
+				WebElement Job = driver.findElement(By.id(JobID));
+				act.moveToElement(Job).build().perform();
+				jse.executeScript("arguments[0].click();", Job);
+				logs.info("Clicked on Record");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				jse.executeScript("document.body.style.zoom='100%';");
+				Thread.sleep(2000);
+
+			} catch (Exception eTasklog) {
+				driver.navigate().refresh();
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				logs.info("Page is refreshed");
+				// --Go To Operations
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("a_operations")));
+				WebElement Operations = isElementPresent("OperationsTab_id");
+				act.moveToElement(Operations).build().perform();
+				act.moveToElement(Operations).click().perform();
+				logs.info("Clicked on Operations");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+						By.xpath("//*[@class=\"OpenCloseClass dropdown open\"]//ul")));
+
+				// --Go to TaskLog
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("a_TaskLog")));
+				isElementPresent("TaskLog_id").click();
+				logs.info("Clicked on TaskLog");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				getScreenshot(driver, "TaskLog");
+
+				// --Zoom Out
+				jse.executeScript("document.body.style.zoom='90%';");
+				Thread.sleep(2000);
+
+				// --Go to Search All Job
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("hlkOrderSearch")));
+				WebElement SearchAllJob = isElementPresent("TLSearchAllJob_id");
+				act.moveToElement(SearchAllJob).build().perform();
+				jse.executeScript("arguments[0].click();", SearchAllJob);
+				logs.info("Clicked on SearchAllJobs");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("AdvancesSearch")));
+
+				// --Zoom In
+				jse.executeScript("document.body.style.zoom='100%';");
+				Thread.sleep(2000);
+
+				// --Reset button
+				isElementPresent("RLReset_id").click();
+				logs.info("Clicked on Reset button");
+
+				// --Set Origin FRom Date
+				WebElement OFromDate = isElementPresent("TLOrderRFrom_id");
+				OFromDate.clear();
+				Date date = new Date();
+				DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				logs.info(dateFormat.format(date));
+				OFromDate.sendKeys(dateFormat.format(date));
+				OFromDate.sendKeys(Keys.TAB);
+				logs.info("Entered Origin From Date");
+
+				// --Set Origin To Date
+				WebElement OToDate = isElementPresent("TLOrderRTo_id");
+				OToDate.clear();
+				date = new Date();
+				dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				logs.info(dateFormat.format(date));
+				OToDate.sendKeys(dateFormat.format(date));
+				OToDate.sendKeys(Keys.TAB);
+				logs.info("Entered Origin From Date");
+
+				String PUID = getData("Connect", i, 32);
+				isElementPresent("TLSARoutTrackNo_id").sendKeys(PUID);
+				logs.info("Entered RouteTrackingID");
+
+				// --Click on Search
+				wait.until(ExpectedConditions.elementToBeClickable(By.id("btnSearch")));
+				isElementPresent("TLSAllJSearchBtn_id").click();
+				logs.info("Click on Search button");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+				String JobID = "lblJobIdValue_0";
+
+				// ---Select Record
+				WebElement Job = isElementPresent("TLSAllJob1stJob_id");
+				act.moveToElement(Job).build().perform();
+				jse.executeScript("arguments[0].click();", Job);
+				logs.info("Clicked on Record");
+				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+				jse.executeScript("document.body.style.zoom='100%';");
+				Thread.sleep(2000);
+
+			}
+
+		} catch (Exception ewait) {
+			getScreenshot(driver, "SearchJobError" + i);
+			String Error = ewait.getMessage();
+
+		}
+
+	}
+
+	public String getStageName() {
+		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
+
+		WebDriverWait wait1 = new WebDriverWait(driver, 10);
+
+		// --Get the Stage Name
+		WebElement Stage = isElementPresent("EOStageName_id");
+		wait.until(ExpectedConditions.visibilityOf(Stage));
+		String StageName = Stage.getText();
+		System.out.println(StageName);
+		logs.info("Stage=" + StageName);
+		msg.append("Stage=" + StageName + "\n");
+		return StageName;
 
 	}
 

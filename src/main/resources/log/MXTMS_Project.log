@@ -1,0 +1,20 @@
+2024-06-11 22:39:06,937 [main] INFO TrackingTest - initialization of the properties file is done
+2024-06-11 22:40:42,687 [main] INFO TrackingTest - Env==Prod
+2024-06-11 22:40:45,774 [main] INFO TrackingTest - https://mxtms.mnx.com/
+2024-06-11 22:40:49,085 [main] INFO TrackingTest - Entered UserName
+2024-06-11 22:40:50,278 [main] INFO TrackingTest - Entered Password
+2024-06-11 22:40:54,184 [main] INFO TrackingTest - Login done
+2024-06-11 22:43:56,299 [main] INFO TrackingTest - Operation Log is not Opened
+2024-06-11 22:43:56,598 [main] INFO TrackingTest - Click on Operations Tab
+2024-06-11 22:44:26,072 [main] INFO TrackingTest - Click on OPerations Log
+2024-06-11 22:44:28,128 [main] INFO TrackingTest - OrderID=11189676
+
+2024-06-11 22:44:39,803 [main] INFO TrackingTest - Job is displayed in edit job
+2024-06-11 22:44:47,439 [main] INFO TrackingTest - Select Order as a CANCELLED
+2024-06-11 22:44:50,180 [main] INFO TrackingTest - Enter Cancel Note
+2024-06-11 22:44:50,701 [main] INFO TrackingTest - Click on Save button
+2024-06-11 22:44:55,952 [main] INFO TrackingTest - Message==(CANCELLED)
+2024-06-11 22:44:55,953 [main] INFO TrackingTest - Order Cancelled
+2024-06-11 22:45:02,582 [main] INFO TrackingTest - Click on Save button
+2024-06-11 22:45:15,634 [main] INFO TrackingTest - Logout done
+2024-06-11 22:45:21,613 [main] INFO TrackingTest - ====Sending Email=====

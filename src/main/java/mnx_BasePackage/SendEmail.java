@@ -1,4 +1,4 @@
-package MNX_BasePackage;
+package mnx_BasePackage;
 
 import java.io.File;
 import java.util.Date;

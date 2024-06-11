@@ -1,4 +1,4 @@
-package MNX_Tracking;
+package mnx_Tracking;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
-import MNX_BasePackage.BaseInit;
+import mnx_BasePackage.BaseInit;
 
 public class track_MXTMS extends BaseInit {
 
@@ -22,6 +22,16 @@ public class track_MXTMS extends BaseInit {
 		mxtmslogin();
 
 		mxtms_createOrder();
+
+		logOut();
+
+	}
+
+	public void oCancel_MXTMS() throws Exception {
+
+		mxtmslogin();
+
+		jobCancel();
 
 		logOut();
 
@@ -58,7 +68,7 @@ public class track_MXTMS extends BaseInit {
 				String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
 
 				try {
-					MNX_BasePackage.SendEmail.sendMail(EmailID, subject, msg.toString(), File);
+					mnx_BasePackage.SendEmail.sendMail(EmailID, subject, msg.toString(), File);
 
 				} catch (Exception ex) {
 					logs.error(ex);
@@ -83,7 +93,7 @@ public class track_MXTMS extends BaseInit {
 			String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
 
 			try {
-				MNX_BasePackage.SendEmail.sendMail(EmailID, subject, msg.toString(), File);
+				mnx_BasePackage.SendEmail.sendMail(EmailID, subject, msg.toString(), File);
 
 			} catch (Exception ex) {
 				logs.error(ex);
@@ -648,4 +658,190 @@ public class track_MXTMS extends BaseInit {
 		}
 
 	}
+
+	public void jobCancel() throws EncryptedDocumentException, InvalidFormatException, IOException,
+			InterruptedException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
+		WebDriverWait wait = new WebDriverWait(driver, 40);// wait time
+		Actions act = new Actions(driver);
+		WebDriverWait wait1 = new WebDriverWait(driver, 5);
+
+		// msg.append("\n\n" + "Search Order Test" + "\n");
+		try {
+			wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@class=\"appworkspace\"]")));
+			wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("pl_Workspace_gvOpsLog0_gvOpsLog")));
+			logs.info("Operation Log is already opened");
+
+		} catch (Exception ee) {
+			logs.info("Operation Log is not Opened");
+			// --Click on Operations
+			WebElement OperationTab = isElementPresent("OperationTab_id");
+			wait1.until(ExpectedConditions.visibilityOfAllElements(OperationTab));
+			wait1.until(ExpectedConditions.elementToBeClickable(OperationTab));
+			act.moveToElement(OperationTab).build().perform();
+			jse.executeScript("arguments[0].click();", OperationTab);
+			System.out.println("Click on Operations Tab");
+			logs.info("Click on Operations Tab");
+			Thread.sleep(2000);
+
+			// --OPerations Log
+			WebElement OPLog = isElementPresent("OPLog_id");
+			wait1.until(ExpectedConditions.visibilityOfAllElements(OPLog));
+			wait1.until(ExpectedConditions.elementToBeClickable(OPLog));
+//		/	act.moveToElement(OPLog).build().perform();
+			act.moveToElement(OPLog).build().perform();
+			jse.executeScript("arguments[0].click();", OPLog);
+			System.out.println("Click on OPerations Log");
+			logs.info("Click on OPerations Log");
+			wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@class=\"appworkspace\"]")));
+
+			getScreenshot(driver, "OperationsLog");
+		}
+
+		// Enter JobID#
+		String OrderID = getData("MXTMS", 1, 3);
+		msg.append("OrderID=" + OrderID + "\n");
+
+		logs.info("OrderID=" + OrderID + "\n");
+		WebElement OrderInp = isElementPresent("OPLOrderId_id");
+		OrderInp.clear();
+		OrderInp.sendKeys(OrderID);
+		OrderInp.sendKeys(Keys.TAB);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+		WebElement Search = isElementPresent("OPLSearchBTN_id");
+		wait1.until(ExpectedConditions.elementToBeClickable(Search));
+		jse.executeScript("arguments[0].click();", Search);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
+
+		try {
+			wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("pl_ws_fv_tx")));
+			// msg.append("Same job is displayed with 2 status==PASS" + "\n");
+			logs.info("Job is displayed in edit job");
+			getScreenshot(driver, "EditJob_" + OrderID);
+			// msg.append("\n" + "Search Order is working==PASS" + "\n");
+			Thread.sleep(5000);
+
+			// --update status cancel
+			WebElement QuoteType = isElementPresent("QRQuoteType_id");
+			act.moveToElement(QuoteType).build().perform();
+			Thread.sleep(2000);
+			wait.until(ExpectedConditions.visibilityOf(QuoteType));
+			QuoteType.sendKeys(Keys.CONTROL, "a");
+			QuoteType.sendKeys(Keys.BACK_SPACE);
+			QuoteType.sendKeys("CANCELLED");
+			QuoteType.sendKeys(Keys.TAB);
+			logs.info("Select Order as a CANCELLED");
+
+			try {
+				wait.until(ExpectedConditions
+						.visibilityOfAllElementsLocatedBy(By.id("pl_wccPopupManager_popupControlManager_PW-1")));
+				getScreenshot(driver, "OrderCancelPopUp");
+
+				// --Switch to iFrame
+				WebElement SourceIFrame = isElementPresent("PackIframe_id");
+				driver.switchTo().frame(SourceIFrame);
+				Thread.sleep(2000);
+
+				WebElement CancelNote = isElementPresent("OCCanOrNote_id");
+				wait.until(ExpectedConditions.visibilityOf(CancelNote));
+				wait1.until(ExpectedConditions.elementToBeClickable(CancelNote));
+				CancelNote.sendKeys("Order for test only");
+				System.out.println("Enter Cancel Note");
+				logs.info("Enter Cancel Note");
+
+				// --Click on Save button
+				WebElement SaveNote = isElementPresent("ChargeSave_id");
+				wait.until(ExpectedConditions.visibilityOf(SaveNote));
+				wait1.until(ExpectedConditions.elementToBeClickable(SaveNote));
+				act.moveToElement(SaveNote).build().perform();
+				SaveNote.click();
+				System.out.println("Click on Save button");
+				logs.info("Click on Save button");
+				driver.switchTo().defaultContent();
+
+				WebElement Loader = isElementPresent("Loader_id");
+				wait.until(ExpectedConditions.invisibilityOf(Loader));
+				Thread.sleep(5000);
+
+				try {
+					WebElement CancelOrder = isElementPresent("COCancelOrder_id");
+					wait.until(ExpectedConditions.visibilityOf(CancelOrder));
+					getScreenshot(driver, "OrderCanceled");
+					String SUccMsg = CancelOrder.getText();
+					logs.info("Message==" + SUccMsg);
+					System.out.println("Message==" + SUccMsg);
+					if (SUccMsg.equalsIgnoreCase("(CANCELLED)")) {
+						logs.info("Order Cancelled");
+						msg.append("Order Cancelled=PASS" + "\n");
+					} else {
+						logs.info("Order not Cancelled");
+						msg.append("Order Cancelled=FAIL" + "\n");
+					}
+
+					// --Click on SAve
+					WebElement Save = isElementPresent("COSave_id");
+					act.moveToElement(Save).build().perform();
+					wait.until(ExpectedConditions.visibilityOf(Save));
+					wait1.until(ExpectedConditions.elementToBeClickable(Save));
+					jse.executeScript("arguments[0].click();", Save);
+					System.out.println("Click on Save button");
+					logs.info("Click on Save button");
+					wait.until(ExpectedConditions.invisibilityOf(Loader));
+					Thread.sleep(5000);
+
+				} catch (Exception e) {
+					logs.info(e);
+					getScreenshot(driver, "OrderCancelIssue");
+					logs.info("Cancel Order issue");
+					msg.append("Order Cancelled=FAIL" + "\n");
+
+				}
+
+				// wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("pl_Workspace_gvOpsLog0_gvOpsLog")));
+
+				// --Get StageName
+			} catch (Exception e) {
+				getScreenshot(driver, "CancelNotesPopUpIssue");
+				logs.info(e);
+				logs.info("Cancel Order notes pop up not displayed");
+				// msg.append("Same job is not displayed with 2 status" + "\n");
+
+			}
+
+		} catch (Exception e) {
+			getScreenshot(driver, "NoJob" + OrderID);
+			logs.info(e);
+			logs.info("Job is not displayed in edit job");
+			// msg.append("Same job is not displayed with 2 status" + "\n");
+			try {
+				WebElement Error = isElementPresent("OPLErrMsg_id");
+				wait1.until(ExpectedConditions.visibilityOfAllElements(Error));
+				String ErrorMsg = Error.getText();
+
+				logs.info("Message==" + ErrorMsg);
+				System.out.println("Message==" + ErrorMsg);
+
+				if (ErrorMsg.contains("No record(s) found.")) {
+					getScreenshot(driver, "NoRecordFound" + OrderID);
+					System.out.println("There is no record with " + OrderID + " OrderID");
+					logs.info("There is no record with " + OrderID + " OrderID");
+
+				} else {
+					getScreenshot(driver, "OtherError" + OrderID);
+					System.out.println("There is another error");
+					logs.info("There is another error");
+				}
+
+			} catch (Exception ee) {
+				getScreenshot(driver, "NoJob" + OrderID);
+				logs.info(ee);
+				logs.info("Job is not displayed in edit job");
+				logs.info("Issue with Search Order");
+
+			}
+
+		}
+	}
+
 }

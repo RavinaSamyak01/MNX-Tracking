@@ -1,4 +1,4 @@
-package MNX_BasePackage;
+package mnx_BasePackage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +21,8 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -56,6 +58,10 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.coordinates.WebDriverCoordsProvider;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 public class BaseInit {
 
@@ -128,240 +134,8 @@ public class BaseInit {
 			// clearResult();
 
 			// driver.manage().window().maximize();
-			mxtmslogin();
 
 		}
-
-	}
-
-	public void mxtmslogin() throws InterruptedException, IOException {
-		WebDriverWait wait = new WebDriverWait(driver, 50);
-
-		String Env = storage.getProperty("Env");
-		logs.info("Env==" + Env);
-
-		if (Env.equalsIgnoreCase("STG")) {
-			String baseUrl = storage.getProperty("STGURL");
-			driver.get(baseUrl);
-			logs.info(baseUrl);
-			Thread.sleep(2000);
-			try {
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("rpLogin_RPC")));
-				String UserName = storage.getProperty("STGUserName");
-				highLight(isElementPresent("UserName_id"), driver);
-				isElementPresent("UserName_id").sendKeys(UserName);
-				logs.info("Entered UserName");
-				String Password = storage.getProperty("STGPassword");
-				highLight(isElementPresent("Password_id"), driver);
-				isElementPresent("Password_id").sendKeys(Password);
-				logs.info("Entered Password");
-			} catch (Exception e) {
-				msg.append("URL is not working==FAIL");
-				getScreenshot(driver, "LoginPageIssue");
-				driver.quit();
-				Env = storage.getProperty("Env");
-				String File = ".\\Report\\Screenshots\\MXTMS-Stage-Screenshot\\LoginPageIssue.png";
-				Env = storage.getProperty("Env");
-				String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
-
-				try {
-					SendEmail.sendMail(EmailID, subject, msg.toString(), File);
-
-				} catch (Exception ex) {
-					logs.error(ex);
-				}
-
-			}
-
-		} else if (Env.equalsIgnoreCase("PROD")) {
-			String baseUrl = storage.getProperty("PRODURL");
-			driver.get(baseUrl);
-			logs.info(baseUrl);
-			Thread.sleep(2000);
-			try {
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("rpLogin_RPC")));
-				String UserName = storage.getProperty("PRODUserName");
-				highLight(isElementPresent("UserName_id"), driver);
-				isElementPresent("UserName_id").sendKeys(UserName);
-				logs.info("Entered UserName");
-				String Password = storage.getProperty("PRODPassword");
-				highLight(isElementPresent("Password_id"), driver);
-				isElementPresent("Password_id").sendKeys(Password);
-				logs.info("Entered Password");
-			} catch (Exception e) {
-				msg.append("URL is not working==FAIL");
-				getScreenshot(driver, "LoginPageIssue");
-				driver.quit();
-				Env = storage.getProperty("Env");
-				String File = ".\\Report\\Screenshots\\MXTMS-Stage-Screenshot\\LoginPageIssue.png";
-				Env = storage.getProperty("Env");
-				String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
-
-				try {
-					SendEmail.sendMail(EmailID, subject, msg.toString(), File);
-
-				} catch (Exception ex) {
-					logs.error(ex);
-				}
-
-			}
-
-		}
-		highLight(isElementPresent("SignIn_id"), driver);
-		isElementPresent("SignIn_id").click();
-		logs.info("Login done");
-
-		try {
-			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
-			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("pl_Workspace_ASPxRoundPanel1_RPC")));
-		} catch (Exception e) {
-			msg.append("Login is not working==FAIL");
-			getScreenshot(driver, "LoginIssue");
-			driver.quit();
-			String File = ".\\Report\\Screenshots\\MXTMS-Stage-Screenshot\\MXWeb_LoginIssue.png";
-			Env = storage.getProperty("Env");
-			String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
-
-			try {
-				SendEmail.sendMail(EmailID, subject, msg.toString(), File);
-
-			} catch (Exception ex) {
-				logs.error(ex);
-			}
-
-		}
-	}
-
-	public void logOut() throws InterruptedException, IOException {
-		WebDriverWait wait = new WebDriverWait(driver, 50);
-		Actions act = new Actions(driver);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		WebElement LogOut = isElementPresent("SignOut_id");
-		wait.until(ExpectedConditions.visibilityOf(LogOut));
-		act.moveToElement(LogOut).build().perform();
-		wait.until(ExpectedConditions.elementToBeClickable(LogOut));
-		highLight(LogOut, driver);
-		js.executeScript("arguments[0].click();", LogOut);
-		Thread.sleep(5000);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("rpLogin_RPC")));
-		logs.info("Logout done");
-		Thread.sleep(5000);
-
-	}
-
-	public void mxWeblogin() throws InterruptedException, IOException {
-		WebDriverWait wait = new WebDriverWait(driver, 50);
-
-		String Env = storage.getProperty("Env");
-
-		if (Env.equalsIgnoreCase("STG")) {
-			String baseUrl = storage.getProperty("STGMxWeb_URL");
-			driver.get(baseUrl);
-			logs.info(baseUrl);
-			Thread.sleep(2000);
-			try {
-				wait.until(ExpectedConditions
-						.visibilityOfElementLocated(By.id("ctl00_ContentPlaceHolder1_ASPxRoundPanel2")));
-				String UserName = storage.getProperty("STGUserName");
-				highLight(isElementPresent("MXWebUName_id"), driver);
-				isElementPresent("MXWebUName_id").sendKeys(UserName);
-				logs.info("Entered UserName");
-				String Password = storage.getProperty("STGPassword");
-				highLight(isElementPresent("MXWebPassword_id"), driver);
-				isElementPresent("MXWebPassword_id").sendKeys(Password);
-				logs.info("Entered Password");
-			} catch (Exception e) {
-				msg.append("URL is not working==FAIL");
-				getScreenshot(driver, "MXWeb_LoginIssue");
-				driver.quit();
-				Env = storage.getProperty("Env");
-				String File = ".\\Report\\Screenshots\\MXTMS-Stage-Screenshot\\MXWeb_LoginIssue.png";
-				Env = storage.getProperty("Env");
-				String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
-
-				try {
-//					/kunjan.modi@samyak.com, pgandhi@samyak.com,parth.doshi@samyak.com
-					/*
-					 * SendEmail.
-					 * sendMail("ravina.prajapati@samyak.com, asharma@samyak.com, parth.doshi@samyak.com"
-					 * , subject, msg.toString(), File);
-					 */
-
-					SendEmail.sendMail(
-							"ravina.prajapati@samyak.com,asharma@samyak.com, parth.doshi@samyak.com, saurabh.jain@samyak.com, himanshu.dholakia@samyak.com",
-							subject, msg.toString(), File);
-
-				} catch (Exception ex) {
-					logs.error(ex);
-				}
-
-			}
-
-		} else if (Env.equalsIgnoreCase("PROD")) {
-			String baseUrl = storage.getProperty("PRODMxWeb_URL");
-			driver.get(baseUrl);
-			logs.info(baseUrl);
-			Thread.sleep(2000);
-			try {
-				wait.until(ExpectedConditions
-						.visibilityOfElementLocated(By.id("ctl00_ContentPlaceHolder1_ASPxRoundPanel2")));
-				String UserName = storage.getProperty("PRODUserName");
-				highLight(isElementPresent("MXWebUName_id"), driver);
-				isElementPresent("MXWebUName_id").sendKeys(UserName);
-				logs.info("Entered UserName");
-				String Password = storage.getProperty("PRODPassword");
-				highLight(isElementPresent("MXWebPassword_id"), driver);
-				isElementPresent("MXWebPassword_id").sendKeys(Password);
-				logs.info("Entered Password");
-			} catch (Exception e) {
-				msg.append("URL is not working==FAIL");
-				getScreenshot(driver, "MXWeb_LoginIssue");
-				driver.quit();
-				Env = storage.getProperty("Env");
-				String File = ".\\Report\\Screenshots\\MXTMS-Stage-Screenshot\\MXWeb_LoginIssue.png";
-				Env = storage.getProperty("Env");
-				String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
-
-				try {
-//					/kunjan.modi@samyak.com, pgandhi@samyak.com,parth.doshi@samyak.com
-					/*
-					 * SendEmail.
-					 * sendMail("ravina.prajapati@samyak.com, asharma@samyak.com, parth.doshi@samyak.com"
-					 * , subject, msg.toString(), File);
-					 */
-
-					SendEmail.sendMail(EmailID, subject, msg.toString(), File);
-
-				} catch (Exception ex) {
-					logs.error(ex);
-				}
-
-			}
-
-		}
-		highLight(isElementPresent("MXWebSignIn_id"), driver);
-		isElementPresent("MXWebSignIn_id").click();
-		logs.info("MXWeb Login done");
-		Thread.sleep(5000);
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("ctl00_Workspace_ASPxRoundPanel1")));
-
-	}
-
-	public void mxWeblogOut() throws InterruptedException, IOException {
-		WebDriverWait wait = new WebDriverWait(driver, 50);
-		Actions act = new Actions(driver);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		WebElement LogOut = isElementPresent("MxWebSignOut_id");
-		wait.until(ExpectedConditions.visibilityOf(LogOut));
-		act.moveToElement(LogOut).build().perform();
-		wait.until(ExpectedConditions.elementToBeClickable(LogOut));
-		highLight(LogOut, driver);
-		js.executeScript("arguments[0].click();", LogOut);
-		Thread.sleep(5000);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ctl00_ContentPlaceHolder1_ASPxRoundPanel2")));
-		logs.info("Logout done");
 
 	}
 
@@ -746,11 +520,7 @@ public class BaseInit {
 
 	@AfterSuite
 	public void SendEmail() throws Exception {
-		try {
-			logOut();
-		} catch (Exception logout) {
 
-		}
 		report.flush();
 		// --Close browser
 		Complete();
@@ -763,15 +533,9 @@ public class BaseInit {
 
 		String Env = storage.getProperty("Env");
 		String File = null;
-		String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
+		String subject = "Selenium Automation Script:" + Env + " MNX Tracking";
 
-		if (Env.equalsIgnoreCase("STG")) {
-			File = ".\\Report\\ExtentReport\\ExtentReportResults.html,.\\src\\main\\resources\\log\\MXTMS.html,.\\src\\main\\resources\\MXTMS_OrderCreation_Result_STG.xlsx";
-		} else if (Env.equalsIgnoreCase("TEST")) {
-			File = ".\\Report\\ExtentReport\\ExtentReportResults.html,.\\src\\main\\resources\\log\\MXTMS.html,.\\src\\main\\resources\\MXTMS_OrderCreation_Result_Test.xlsx";
-		} else if (Env.equalsIgnoreCase("Prod")) {
-			File = ".\\Report\\ExtentReport\\ExtentReportResults.html,.\\src\\main\\resources\\log\\MXTMS.html,..\\src\\main\\resources\\MXTMS_OrderCreation_Result_PROD.xlsx";
-		}
+		File = ".\\Report\\ExtentReport\\ExtentReportResults.html,.\\src\\main\\resources\\log\\MNX.html";
 
 		try {
 
@@ -1269,6 +1033,22 @@ public class BaseInit {
 		String formattedDate = nextSunday.format(formatter);
 
 		return formattedDate;
+	}
+
+	public void fullpageScreenshot(String filename) throws IOException {
+		// Take the full-page screenshot
+		Screenshot screenshot = new AShot().coordsProvider(new WebDriverCoordsProvider())
+				.shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
+
+		// Ensure the directory exists
+		File screenshotDir = new File(".\\src\\main\\resources\\Screenshots");
+		if (!screenshotDir.exists()) {
+			screenshotDir.mkdirs();
+		}
+
+		// Save the screenshot in the screenshots directory
+		ImageIO.write(screenshot.getImage(), "PNG", new File(screenshotDir, filename));
+
 	}
 
 }
