@@ -1,0 +1,36 @@
+2024-06-11 18:31:17,172 [main] INFO TrackingTest - initialization of the properties file is done
+2024-06-11 18:31:22,311 [main] INFO TrackingTest - Env for execute script is : Prod
+2024-06-11 18:31:28,765 [main] INFO TrackingTest - Entered UserName
+2024-06-11 18:31:30,033 [main] INFO TrackingTest - Entered Password
+2024-06-11 18:31:31,254 [main] INFO TrackingTest - Login done
+2024-06-11 18:32:24,233 [main] INFO TrackingTest - Click on Operation
+2024-06-11 18:32:27,842 [main] INFO TrackingTest - Click on Tasklog
+2024-06-11 18:32:27,954 [main] INFO TrackingTest - Click on New Order
+2024-06-11 18:32:33,207 [main] INFO TrackingTest - =====Service:- LOC=====
+2024-06-11 18:32:33,947 [main] INFO TrackingTest - Entered CallerName
+2024-06-11 18:32:34,503 [main] INFO TrackingTest - Entered Contact/Phone
+2024-06-11 18:32:35,021 [main] INFO TrackingTest - Entered Customer Code : 950655
+2024-06-11 18:32:41,780 [main] INFO TrackingTest - Dialogue is not displayed for Customer
+2024-06-11 18:32:44,361 [main] INFO TrackingTest - Entered PU Zip
+2024-06-11 18:32:45,002 [main] INFO TrackingTest - Click on PU Address
+2024-06-11 18:32:45,334 [main] INFO TrackingTest - Entered PU Company
+2024-06-11 18:32:45,657 [main] INFO TrackingTest - Entered PU AddressLine1
+2024-06-11 18:32:45,975 [main] INFO TrackingTest - Entered PU Attention
+2024-06-11 18:32:46,461 [main] INFO TrackingTest - Entered PU Phone
+2024-06-11 18:32:56,527 [main] ERROR TrackingTest - org.openqa.selenium.TimeoutException: Expected condition failed: waiting for element to no longer be visible: By.xpath: //input[contains(@class,'ng-invalid ng-invalid-required')] (tried for 10 second(s) with 500 milliseconds interval)
+Build info: version: '4.11.0', revision: '040bc5406b'
+System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '20'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 125.0.6422.142, chrome: {chromedriverVersion: 125.0.6422.141 (4b1e8393712..., userDataDir: C:\Users\RPRAJA~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:57204}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:57204/devtoo..., se:cdpVersion: 125.0.6422.142, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: d666294c3b96bb9ca44dea122f0c7221
+2024-06-11 18:32:56,530 [main] INFO TrackingTest - PU Ready time is exist
+2024-06-11 18:32:56,571 [main] INFO TrackingTest - PU Mileage==14
+2024-06-11 18:32:57,098 [main] INFO TrackingTest - Entered DL Zip
+2024-06-11 18:33:02,202 [main] INFO TrackingTest - Entered DL Address
+2024-06-11 18:33:02,463 [main] INFO TrackingTest - Entered DL Company
+2024-06-11 18:33:02,722 [main] INFO TrackingTest - Entered DL Address Line1
+2024-06-11 18:33:02,901 [main] INFO TrackingTest - Entered DL Attention
+2024-06-11 18:33:03,130 [main] INFO TrackingTest - Entered DL Phone
+2024-06-11 18:33:03,181 [main] INFO TrackingTest - DL Miles==19
+2024-06-11 18:33:05,662 [main] INFO TrackingTest - Entered Total Qty
+2024-06-11 18:33:05,875 [main] INFO TrackingTest - Entered Weight
