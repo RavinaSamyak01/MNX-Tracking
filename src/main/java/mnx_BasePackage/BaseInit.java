@@ -150,11 +150,11 @@ public class BaseInit {
 		// past the code mentioned below
 
 		System.setProperty("extent.repoAutoFrameworkr.pdf.start", "true");
-		System.setProperty("extent.repoAutoFrameworkr.pdf.out", "./Report/PDFExtentReport/ExtentPDF.pdf");
+		System.setProperty("extent.repoAutoFrameworkr.pdf.out", "./Report/ExtentReport/MNXTracking.pdf");
 
 		// report.loadConfig(new File(System.getProperty("user.dir")
 		// +"\\extent-config.xml"));
-		report = new ExtentReports("./Report/ExtentReport/ExtentReportResults.html", true);
+		report = new ExtentReports("./Report/ExtentReport/MNXTracking.html", true);
 		// test = report.startTest();
 	}
 
@@ -442,7 +442,7 @@ public class BaseInit {
 		String File = null;
 		String subject = "Selenium Automation Script:" + Env + " MNX Tracking";
 
-		File = ".\\Report\\ExtentReport\\ExtentReportResults.html,.\\src\\main\\resources\\log\\MNXTracking.html";
+		File = ".\\Report\\ExtentReport\\MNXTracking.html,.\\src\\main\\resources\\log\\MNXTracking_Log.html";
 
 		try {
 
@@ -942,30 +942,21 @@ public class BaseInit {
 		return formattedDate;
 	}
 
-	public String fullpageScreenshot(String filename) throws IOException {
+	public void fullpageScreenshot(String filename) throws IOException {
 		// Take the full-page screenshot
 		Screenshot screenshot = new AShot().coordsProvider(new WebDriverCoordsProvider())
 				.shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
 
-		// TakesScreenshot ts = (TakesScreenshot) driver;
-		BufferedImage source = screenshot.getImage();
-		String destination = System.getProperty("user.dir") + "/Report/Screenshots/" + filename + ".png";
+		String destination = System.getProperty("user.dir") + "/Report/Screenshots/";
+		File screenshotDir = new File(destination);
 
-		File finalDestination = new File(destination);
-		copyFile(source, finalDestination);
-
-		// after execution, you could see a folder "FailedTestsScreenshots" under src
-		// folder
+		// Ensure the directory exists
+		if (!screenshotDir.exists()) {
+			screenshotDir.mkdirs();
+		}
 
 		// Save the screenshot in the screenshots directory
-		// ImageIO.write(screenshot.getImage(), "PNG", new File(screenshotDir,
-		// filename));
-		return destination;
-
-	}
-
-	private void copyFile(BufferedImage source, File finalDestination) {
-		// TODO Auto-generated method stub
+		ImageIO.write(screenshot.getImage(), "PNG", new File(screenshotDir, filename + ".png"));
 
 	}
 
