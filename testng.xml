@@ -1,71 +1,10 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="MXTMS Smoke">
+<suite name="MNX Tracking">
 
 
-	<!--<test thread-count="5" name="FF OrderCreation">
+	<test thread-count="5" name="MNX Tracking">
 		<classes>
-			<class name="mxtms_OrderCreation.FF"></class>
-		</classes>
-	</test>
-
-	<test thread-count="5" name="3DP OrderCreation">
-		<classes>
-			<class name="mxtms_OrderCreation.T3DP"></class>
-		</classes>
-	</test>-->
-
-	<test thread-count="5" name="OrderCreation Processing">
-		<classes>
-			<class name="mxtms_OrderCreation.OrderCreationProcessing"></class>
-		</classes>
-	</test>
-
-
-	<test thread-count="5" name="Search Order">
-		<classes>
-			<class name="mxtms_Operations.SearchOrder"></class>
-		</classes>
-	</test>
-
-	<test thread-count="5" name="Tabs">
-		<classes>
-			<class name="mxtms_Operations.OrderCreationTabs"></class>
-		</classes>
-	</test>
-
-	<test thread-count="5" name="Manifest">
-		<classes>
-			<class name="mxtms_Operations.ManifestOperations"></class>
-		</classes>
-	</test>
-
-	<test thread-count="5" name="Commodity">
-		<classes>
-			<class name="mxtms_SetUp.CreateCommodity"></class>
-		</classes>
-	</test>
-
-	<test thread-count="5" name="Contents">
-		<classes>
-			<class name="mxtms_SetUp.Contents"></class>
-		</classes>
-	</test>
-
-	<test thread-count="5" name="Quote">
-		<classes>
-			<class name="mxtms_Operations.QuoteOperations"></class>
-		</classes>
-	</test>
-
-	<test thread-count="5" name="MXWeb OrderCreation">
-		<classes>
-			<class name="mxtms_MXWeb.MXWeb_OrderCreation"></class>
-		</classes>
-	</test>
-
-	<test thread-count="5" name="MXPartner Print Upload">
-		<classes>
-			<class name="mxtms_MXPartners.UploadPrintScenario"></class>
+			<class name="mnx_Tracking.TrackingTest"></class>
 		</classes>
 	</test>
 

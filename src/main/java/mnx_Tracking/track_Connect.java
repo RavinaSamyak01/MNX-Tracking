@@ -45,7 +45,7 @@ public class track_Connect extends BaseInit {
 	}
 
 	public void login() throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 15);
 		// Actions act = new Actions(driver);
 		String Env = storage.getProperty("Env");
 		System.out.println("Env " + Env);
@@ -71,9 +71,9 @@ public class track_Connect extends BaseInit {
 				getScreenshot(driver, "LoginIssue");
 				driver.quit();
 				Env = storage.getProperty("Env");
-				String File = ".\\Report\\RTE_Screenshot\\LoginIssue.png";
+				String File = ".\\Report\\MNX_Screenshot\\LoginIssue.png";
 				Env = storage.getProperty("Env");
-				String subject = "Selenium Automation Script:" + Env + " Connect Portal";
+				String subject = "Selenium Automation Script:" + Env + " MNX Tracking";
 
 				try {
 //					/kunjan.modi@samyak.com, pgandhi@samyak.com,parth.doshi@samyak.com
@@ -93,7 +93,7 @@ public class track_Connect extends BaseInit {
 		}
 
 		// BaseURL = baseUrl;
-		msg.append("URL==" + baseUrl + "\n");
+		msg.append("URL==" + baseUrl);
 		highLight(isElementPresent("ConLogin_id"), driver);
 		isElementPresent("ConLogin_id").click();
 		logs.info("Login done");
@@ -120,7 +120,7 @@ public class track_Connect extends BaseInit {
 	}
 
 	public void logOut() throws InterruptedException, IOException {
-		WebDriverWait wait = new WebDriverWait(driver, 20);
+		WebDriverWait wait = new WebDriverWait(driver, 15);
 		Actions act = new Actions(driver);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -141,7 +141,7 @@ public class track_Connect extends BaseInit {
 	public void orderCreation()
 			throws EncryptedDocumentException, InvalidFormatException, IOException, AWTException, InterruptedException {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
-		WebDriverWait wait = new WebDriverWait(driver, 60);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 20);// wait time
 
 		WebDriverWait wait1 = new WebDriverWait(driver, 10);
 
@@ -704,13 +704,13 @@ public class track_Connect extends BaseInit {
 
 		// WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));//
 		// wait time
-		WebDriverWait wait = new WebDriverWait(driver, 60);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 20);// wait time
 		Actions act = new Actions(driver);
 		WebDriverWait wait2 = new WebDriverWait(driver, 10);//
 
 		String Env = storage.getProperty("Env");
 		logs.info("Start process for job cancel");
-		msg.append("Start process for job cancel" + "\n");
+		// msg.append("Start process for job cancel" + "\n");
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
@@ -816,6 +816,9 @@ public class track_Connect extends BaseInit {
 		Thread.sleep(1500);
 		getScreenshot(driver, "canceljob_type_" + i);
 
+		String PUID = getData("Connect", 1, 32);
+		//msg.append("PickupID=" + PUID + "\n");
+
 		if (Env.equalsIgnoreCase("PROD")) {
 
 			if (Job_status.equalsIgnoreCase("CANCEL")) {
@@ -823,7 +826,7 @@ public class track_Connect extends BaseInit {
 				logs.info("job cancel process == PASS");
 				getStageName();
 				logs.info("Job Cancellation Process == pass");
-				msg.append("Job Cancellation Process == PASS" + "\n");
+				msg.append("Order Cancelled=PASS" + "\n");
 			}
 
 			// -- re-attempt to cancel job
@@ -930,9 +933,9 @@ public class track_Connect extends BaseInit {
 
 	public void open_pickup_frm_tasklog(int i)
 			throws InterruptedException, EncryptedDocumentException, InvalidFormatException, IOException {
-		WebDriverWait wait = new WebDriverWait(driver, 40);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 20);// wait time
 		Actions act = new Actions(driver);
-		WebDriverWait wait2 = new WebDriverWait(driver, 60);// wait time
+		WebDriverWait wait2 = new WebDriverWait(driver, 15);// wait time
 		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
 
 		try {
@@ -979,7 +982,7 @@ public class track_Connect extends BaseInit {
 
 	public void searchJob(int i) throws Exception {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
-		WebDriverWait wait = new WebDriverWait(driver, 30);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
 
 		WebDriverWait wait1 = new WebDriverWait(driver, 10);
 		Actions act = new Actions(driver);
@@ -994,6 +997,7 @@ public class track_Connect extends BaseInit {
 				wait1.until(ExpectedConditions.elementToBeClickable(By.id("txtContains")));
 
 				String PUID = getData("Connect", i, 32);
+				msg.append("PickupID=" + PUID + "\n");
 
 				isElementPresent("TLSearch_id").clear();
 				isElementPresent("TLSearch_id").sendKeys(PUID);
@@ -1079,6 +1083,8 @@ public class track_Connect extends BaseInit {
 				String PUID = getData("Connect", i, 32);
 
 				logs.info("PickUpID=" + PUID + "\n");
+				msg.append("\n"+"PickupID=" + PUID + "\n");
+
 				isElementPresent("TLSearch_id").clear();
 				isElementPresent("TLSearch_id").sendKeys(PUID);
 				isElementPresent("TLSearch_id").sendKeys(Keys.TAB);
@@ -1144,7 +1150,7 @@ public class track_Connect extends BaseInit {
 
 	public void searchallJob(int i) throws Exception {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
-		WebDriverWait wait = new WebDriverWait(driver, 30);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
 
 		WebDriverWait wait1 = new WebDriverWait(driver, 10);
 		Actions act = new Actions(driver);
@@ -1215,7 +1221,7 @@ public class track_Connect extends BaseInit {
 
 				String PUID = getData("Connect", i, 32);
 				isElementPresent("TLSAllJPickup_id").sendKeys(PUID);
-				logs.info("Entered RouteTrackingID : " + PUID);
+				logs.info("Entered PickupID : " + PUID);
 
 				// --Click on Search
 				wait.until(ExpectedConditions.elementToBeClickable(By.id("btnSearch")));
@@ -1340,7 +1346,7 @@ public class track_Connect extends BaseInit {
 		String StageName = Stage.getText();
 		System.out.println(StageName);
 		logs.info("Stage=" + StageName);
-		msg.append("Stage=" + StageName + "\n");
+		// msg.append("Stage=" + StageName + "\n");
 		return StageName;
 
 	}

@@ -38,7 +38,7 @@ public class track_MXTMS extends BaseInit {
 	}
 
 	public void mxtmslogin() throws InterruptedException, IOException {
-		WebDriverWait wait = new WebDriverWait(driver, 50);
+		WebDriverWait wait = new WebDriverWait(driver, 15);
 
 		String Env = storage.getProperty("Env");
 		logs.info("Env==" + Env);
@@ -47,6 +47,8 @@ public class track_MXTMS extends BaseInit {
 			String baseUrl = storage.getProperty("MXTMSPRODURL");
 			driver.get(baseUrl);
 			logs.info(baseUrl);
+			msg.append("\n" + "URL==" + baseUrl + "\n");
+
 			Thread.sleep(2000);
 			try {
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("rpLogin_RPC")));
@@ -63,9 +65,9 @@ public class track_MXTMS extends BaseInit {
 				getScreenshot(driver, "LoginPageIssue");
 				driver.quit();
 				Env = storage.getProperty("Env");
-				String File = ".\\Report\\Screenshots\\MXTMS-Stage-Screenshot\\LoginPageIssue.png";
+				String File = ".\\Report\\MNX_Screenshot\\LoginPageIssue.png";
 				Env = storage.getProperty("Env");
-				String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
+				String subject = "Selenium Automation Script:" + Env + " MNX Tracking";
 
 				try {
 					mnx_BasePackage.SendEmail.sendMail(EmailID, subject, msg.toString(), File);
@@ -85,12 +87,12 @@ public class track_MXTMS extends BaseInit {
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loaderDiv")));
 			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("pl_Workspace_ASPxRoundPanel1_RPC")));
 		} catch (Exception e) {
-			msg.append("Login is not working==FAIL");
-			getScreenshot(driver, "LoginIssue");
+			msg.append("\n" + "Login is not working==FAIL");
+			getScreenshot(driver, "MXTMS_LoginIssue");
 			driver.quit();
-			String File = ".\\Report\\Screenshots\\MXTMS-Stage-Screenshot\\MXWeb_LoginIssue.png";
+			String File = ".\\Report\\MNX_Screenshot\\MXTMS_LoginIssue.png";
 			Env = storage.getProperty("Env");
-			String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
+			String subject = "Selenium Automation Script:" + Env + " MNX Tracking";
 
 			try {
 				mnx_BasePackage.SendEmail.sendMail(EmailID, subject, msg.toString(), File);
@@ -103,7 +105,7 @@ public class track_MXTMS extends BaseInit {
 	}
 
 	public void logOut() throws InterruptedException, IOException {
-		WebDriverWait wait = new WebDriverWait(driver, 50);
+		WebDriverWait wait = new WebDriverWait(driver, 15);
 		Actions act = new Actions(driver);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -123,7 +125,7 @@ public class track_MXTMS extends BaseInit {
 	public void mxtms_createOrder() throws IOException {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;// scroll,click
-		WebDriverWait wait = new WebDriverWait(driver, 30);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
 		Actions act = new Actions(driver);
 		WebDriverWait wait1 = new WebDriverWait(driver, 7);// wait time
 
@@ -134,7 +136,7 @@ public class track_MXTMS extends BaseInit {
 			ServiceID = getData("MXTMS", 1, 0);
 			System.out.println("Service== " + ServiceID);
 			logs.info("=====Service:- " + ServiceID + "=====");
-			msg.append("\n" + "===Service:- " + ServiceID + "===" + "\n");
+			msg.append("===Service:- " + ServiceID + "===" + "\n");
 
 			// --Click on Operations
 			WebElement OperationTab = isElementPresent("OperationTab_id");
@@ -531,7 +533,7 @@ public class track_MXTMS extends BaseInit {
 	public void enterPickup(int i) throws InterruptedException, EncryptedDocumentException, InvalidFormatException,
 			IOException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
-		WebDriverWait wait = new WebDriverWait(driver, 30);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
 		Actions act = new Actions(driver);
 		WebDriverWait wait1 = new WebDriverWait(driver, 5);
 
@@ -587,7 +589,7 @@ public class track_MXTMS extends BaseInit {
 	public void getQDT(int i) throws InterruptedException, IOException, EncryptedDocumentException,
 			InvalidFormatException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
-		WebDriverWait wait = new WebDriverWait(driver, 60);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
 		Actions act = new Actions(driver);
 		WebDriverWait wait1 = new WebDriverWait(driver, 10);
 
@@ -641,19 +643,19 @@ public class track_MXTMS extends BaseInit {
 				getScreenshot(driver, "QDT_Issue" + i);
 				logs.info("Issue in QDT calculation");
 				logs.info("QDT calculation working=FAIL");
-				msg.append("QDT calculation working=FAIL" + "\n");
+				// msg.append("QDT calculation working=FAIL" + "\n");
 
 			} else {
 				getScreenshot(driver, "QDT_Working" + i);
 				logs.info("QDT calculation working=PASS");
-				msg.append("QDT calculation working=PASS" + "\n");
+				// msg.append("QDT calculation working=PASS" + "\n");
 
 			}
 		} catch (Exception e) {
 			logs.info(e);
 			getScreenshot(driver, "QDTIssue_" + i);
 			logs.info("Issue with QDT");
-			msg.append("QDT calculation working=FAIL" + "\n");
+			// msg.append("QDT calculation working=FAIL" + "\n");
 
 		}
 
@@ -662,7 +664,7 @@ public class track_MXTMS extends BaseInit {
 	public void jobCancel() throws EncryptedDocumentException, InvalidFormatException, IOException,
 			InterruptedException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
-		WebDriverWait wait = new WebDriverWait(driver, 40);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
 		Actions act = new Actions(driver);
 		WebDriverWait wait1 = new WebDriverWait(driver, 5);
 

@@ -1,5 +1,6 @@
 package mnx_BasePackage;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -95,7 +96,7 @@ public class BaseInit {
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 
-			// options.addArguments("--headless", "--window-size=1920, 1080");
+			options.addArguments("--headless", "--window-size=1920, 1080");
 			options.addArguments("--window-size=1920, 1080");
 			options.addArguments("start-maximized"); // open Browser in maximized mode
 			options.addArguments("disable-infobars"); // disabling infobars
@@ -129,9 +130,6 @@ public class BaseInit {
 			 * Dimension newDimension = new Dimension(1038, 776);
 			 * driver.manage().window().setSize(newDimension);
 			 */
-
-			// --clear result
-			// clearResult();
 
 			// driver.manage().window().maximize();
 
@@ -175,42 +173,7 @@ public class BaseInit {
 			File source = ts.getScreenshotAs(OutputType.FILE);
 			// after execution, you could see a folder "FailedTestsScreenshots" under src
 			// folder
-			String destination = System.getProperty("user.dir") + "/Report/NA-Production-Screenshot/" + screenshotName
-					+ ".png";
-
-			File finalDestination = new File(destination);
-			try {
-				FileUtils.copyFile(source, finalDestination);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return destination;
-		} else if (Env.equalsIgnoreCase("STG")) {
-
-			TakesScreenshot ts = (TakesScreenshot) driver;
-			File source = ts.getScreenshotAs(OutputType.FILE);
-			// after execution, you could see a folder "FailedTestsScreenshots" under src
-			// folder
-			String destination = System.getProperty("user.dir") + "/Report/Screenshots/MXTMS-Stage-Screenshot/"
-					+ screenshotName + ".png";
-
-			File finalDestination = new File(destination);
-			try {
-				FileUtils.copyFile(source, finalDestination);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return destination;
-		} else if (Env.equalsIgnoreCase("Test")) {
-
-			TakesScreenshot ts = (TakesScreenshot) driver;
-			File source = ts.getScreenshotAs(OutputType.FILE);
-			// after execution, you could see a folder "FailedTestsScreenshots" under src
-			// folder
-			String destination = System.getProperty("user.dir") + "/Report/Screenshots/MXTMS-Test-Screenshot/"
-					+ screenshotName + ".png";
+			String destination = System.getProperty("user.dir") + "/Report/MNX_Screenshot/" + screenshotName + ".png";
 
 			File finalDestination = new File(destination);
 			try {
@@ -365,62 +328,6 @@ public class BaseInit {
 		jse.executeScript("arguments[0].scrollIntoView(true);", element);
 	}
 
-	public void pagination() {
-		Actions act = new Actions(driver);
-		WebDriverWait wait = new WebDriverWait(driver, 50);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		// Check paging
-		List<WebElement> pagination = driver
-				.findElements(By.xpath("//*[@class=\"dx-pages\"]//div[contains(@aria-label,'Page')]"));
-		System.out.println("size of pagination is==" + pagination.size());
-
-		if (pagination.size() > 0) {
-			WebElement pageinfo = driver.findElement(By.xpath("//*[@class=\"dx-info\"]"));
-			System.out.println("page info is==" + pageinfo.getText());
-			WebElement pagerdiv = driver.findElement(By.className("dx-pages"));
-			WebElement secndpage = driver.findElement(By.xpath("//*[@aria-label=\"Page 2\"]"));
-			WebElement prevpage = driver.findElement(By.xpath("//*[@aria-label=\"Previous page\"]"));
-			WebElement nextpage = driver.findElement(By.xpath("//*[@aria-label=\" Next page\"]"));
-			WebElement firstpage = driver.findElement(By.xpath("//*[@aria-label=\"Page 1\"]"));
-			// Scroll
-			js.executeScript("arguments[0].scrollIntoView();", pagerdiv);
-
-			if (pagination.size() > 1) {
-				// click on page 2
-				secndpage = driver.findElement(By.xpath("//*[@aria-label=\"Page 2\"]"));
-				act.moveToElement(secndpage).click().perform();
-				System.out.println("Clicked on page 2");
-				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@class=\"ajax-loadernew\"]")));
-
-				// click on previous button
-				prevpage = driver.findElement(By.xpath("//*[@aria-label=\"Previous page\"]"));
-				prevpage = driver.findElement(By.xpath("//*[@aria-label=\"Previous page\"]"));
-				act.moveToElement(prevpage).click().perform();
-				System.out.println("clicked on previous page");
-				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@class=\"ajax-loadernew\"]")));
-
-				// click on next button
-				nextpage = driver.findElement(By.xpath("//*[@aria-label=\" Next page\"]"));
-				nextpage = driver.findElement(By.xpath("//*[@aria-label=\" Next page\"]"));
-				act.moveToElement(nextpage).click().perform();
-				System.out.println("clicked on next page");
-				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@class=\"ajax-loadernew\"]")));
-
-				firstpage = driver.findElement(By.xpath("//*[@aria-label=\"Page 1\"]"));
-				act.moveToElement(firstpage).click().perform();
-				System.out.println("Clicked on page 1");
-				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[@class=\"ajax-loadernew\"]")));
-
-			} else {
-				System.out.println("Only 1 page is exist");
-			}
-
-		} else {
-			System.out.println("pagination is not exist");
-		}
-	}
-
 	public static String getData(String sheetName, int row, int col)
 			throws EncryptedDocumentException, InvalidFormatException, IOException {
 
@@ -535,7 +442,7 @@ public class BaseInit {
 		String File = null;
 		String subject = "Selenium Automation Script:" + Env + " MNX Tracking";
 
-		File = ".\\Report\\ExtentReport\\ExtentReportResults.html,.\\src\\main\\resources\\log\\MNX.html";
+		File = ".\\Report\\ExtentReport\\ExtentReportResults.html,.\\src\\main\\resources\\log\\MNXTracking.html";
 
 		try {
 
@@ -1035,19 +942,30 @@ public class BaseInit {
 		return formattedDate;
 	}
 
-	public void fullpageScreenshot(String filename) throws IOException {
+	public String fullpageScreenshot(String filename) throws IOException {
 		// Take the full-page screenshot
 		Screenshot screenshot = new AShot().coordsProvider(new WebDriverCoordsProvider())
 				.shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
 
-		// Ensure the directory exists
-		File screenshotDir = new File(".\\src\\main\\resources\\Screenshots");
-		if (!screenshotDir.exists()) {
-			screenshotDir.mkdirs();
-		}
+		// TakesScreenshot ts = (TakesScreenshot) driver;
+		BufferedImage source = screenshot.getImage();
+		String destination = System.getProperty("user.dir") + "/Report/Screenshots/" + filename + ".png";
+
+		File finalDestination = new File(destination);
+		copyFile(source, finalDestination);
+
+		// after execution, you could see a folder "FailedTestsScreenshots" under src
+		// folder
 
 		// Save the screenshot in the screenshots directory
-		ImageIO.write(screenshot.getImage(), "PNG", new File(screenshotDir, filename));
+		// ImageIO.write(screenshot.getImage(), "PNG", new File(screenshotDir,
+		// filename));
+		return destination;
+
+	}
+
+	private void copyFile(BufferedImage source, File finalDestination) {
+		// TODO Auto-generated method stub
 
 	}
 

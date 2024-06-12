@@ -23,16 +23,16 @@ public class TrackingTest extends BaseInit {
 
 		try {
 			// --create Connect Job
-		//	TC.oc_Connect();
+			TC.oc_Connect();
 
 			// --create MXTMS job
-			//TM.oc_MXTMS();
+			TM.oc_MXTMS();
 
 			// --MNX Tracking
-			//mnx_Tracking();
+			mnx_Tracking();
 
 			// --Cancel connect job
-			//TC.oCancel_Connect();
+			TC.oCancel_Connect();
 
 			// --cancel MXTMS job
 			TM.oCancel_MXTMS();
@@ -66,6 +66,8 @@ public class TrackingTest extends BaseInit {
 		String baseUrl = storage.getProperty("MNXPRODURL");
 		driver.get(baseUrl);
 		logs.info(baseUrl);
+		msg.append("\n" + "URL==" + baseUrl);
+
 		Thread.sleep(10000);
 
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("fl-main-content")));
@@ -85,6 +87,8 @@ public class TrackingTest extends BaseInit {
 			logs.info(e);
 
 		}
+		msg.append("\n");
+
 		try {
 			for (int i = 1; i < 3; i++) {
 
@@ -102,6 +106,7 @@ public class TrackingTest extends BaseInit {
 				// --select prefix
 
 				String Pickup = null;
+				String Module = null;
 
 				if (i == 1) {
 					Select Pref = new Select(isElementPresent("MNXTPrefix_name"));
@@ -114,6 +119,8 @@ public class TrackingTest extends BaseInit {
 					PUID.sendKeys(Pickup);
 					logs.info("Entered PickupID");
 
+					Module = "Connect";
+
 				} else if (i == 2) {
 					Select Pref = new Select(isElementPresent("MNXTPrefix_name"));
 					Pref.selectByValue("M");
@@ -124,6 +131,8 @@ public class TrackingTest extends BaseInit {
 					PUID.clear();
 					PUID.sendKeys(Pickup);
 					logs.info("Entered PickupID");
+
+					Module = "MXTMS";
 
 				}
 
@@ -141,11 +150,17 @@ public class TrackingTest extends BaseInit {
 					WebElement TrackDiv = isElementPresent("MNXTrackDiv_xpath");
 					act.moveToElement(TrackDiv).build().perform();
 					wait.until(ExpectedConditions.visibilityOf(TrackDiv));
-					fullpageScreenshot("ConnectTracking_" + Pickup);
+					fullpageScreenshot(Module + "Tracking_" + Pickup);
+
+					logs.info(Module + " Tracking PASS #" + Pickup);
+					msg.append(Module + " Tracking PASS #" + Pickup + "\n");
 
 				} catch (Exception e) {
 					logs.info(e);
-					fullpageScreenshot("ConnectTracking_Issue" + Pickup);
+					fullpageScreenshot(Module + "Tracking_Issue" + Pickup);
+					logs.info(Module + " Tracking PASS #" + Pickup);
+					msg.append(Module + " Tracking PASS #" + Pickup + "\n");
+
 				}
 
 			}
@@ -153,6 +168,9 @@ public class TrackingTest extends BaseInit {
 		} catch (Exception e) {
 			msg.append("URL is not working==FAIL");
 			fullpageScreenshot("MNXPage_Issue");
+			logs.info("Tracking FAIL");
+			msg.append("\n\n" + "Tracking FAIL" + "\n");
+
 			driver.quit();
 			Env = storage.getProperty("Env");
 			String File = ".\\Report\\Screenshots\\MXTMS-PROD-Screenshot\\LoginPageIssue.png";
@@ -167,6 +185,8 @@ public class TrackingTest extends BaseInit {
 			}
 
 		}
+
+		msg.append("\n");
 
 	}
 
