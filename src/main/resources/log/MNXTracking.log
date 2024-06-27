@@ -1,172 +1,70 @@
-2024-06-12 13:28:22,154 - TrackingTest -INFO - initialization of the properties file is done
-2024-06-12 13:28:26,895 - TrackingTest -INFO - Env for execute script is : Prod
-2024-06-12 13:28:34,345 - TrackingTest -INFO - Entered UserName
-2024-06-12 13:28:35,549 - TrackingTest -INFO - Entered Password
-2024-06-12 13:28:36,733 - TrackingTest -INFO - Login done
-2024-06-12 13:28:47,311 - TrackingTest -INFO - Click on Operation
-2024-06-12 13:28:52,818 - TrackingTest -INFO - Click on Tasklog
-2024-06-12 13:28:52,960 - TrackingTest -INFO - Click on New Order
-2024-06-12 13:28:58,318 - TrackingTest -INFO - =====Service:- LOC=====
-2024-06-12 13:28:58,630 - TrackingTest -INFO - Entered CallerName
-2024-06-12 13:28:59,035 - TrackingTest -INFO - Entered Contact/Phone
-2024-06-12 13:28:59,513 - TrackingTest -INFO - Entered Customer Code : 950655
-2024-06-12 13:29:07,013 - TrackingTest -INFO - Dialogue is not displayed for Customer
-2024-06-12 13:29:09,576 - TrackingTest -INFO - Entered PU Zip
-2024-06-12 13:29:10,401 - TrackingTest -INFO - Click on PU Address
-2024-06-12 13:29:10,983 - TrackingTest -INFO - Entered PU Company
-2024-06-12 13:29:11,558 - TrackingTest -INFO - Entered PU AddressLine1
-2024-06-12 13:29:11,923 - TrackingTest -INFO - Entered PU Attention
-2024-06-12 13:29:12,320 - TrackingTest -INFO - Entered PU Phone
-2024-06-12 13:29:22,819 - TrackingTest -ERROR - org.openqa.selenium.TimeoutException: Expected condition failed: waiting for element to no longer be visible: By.xpath: //input[contains(@class,'ng-invalid ng-invalid-required')] (tried for 10 second(s) with 500 milliseconds interval)
+2024-06-27 17:59:10,896 - TrackingTest -INFO - initialization of the properties file is done
+2024-06-27 17:59:12,758 - TrackingTest -INFO - RunConf==local
+2024-06-27 17:59:20,514 - TrackingTest -INFO - Env==Prod
+2024-06-27 17:59:22,543 - TrackingTest -INFO - https://www.mnx.com/
+2024-06-27 17:59:58,346 - TrackingTest -INFO - org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of [[ChromeDriver: chrome on windows (bf25d54ec89e2567f7912e64c3df403a)] -> xpath: //*[@class="cky-btn cky-btn-accept"]] (tried for 20 second(s) with 500 milliseconds interval)
 Build info: version: '4.11.0', revision: '040bc5406b'
 System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '20'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome-headless-shell, browserVersion: 125.0.6422.142, chrome: {chromedriverVersion: 125.0.6422.141 (4b1e8393712..., userDataDir: C:\Users\RPRAJA~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:58937}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:58937/devtoo..., se:cdpVersion: 125.0.6422.142, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: be0eb151bdf14094b44fdbdec0f62d4f
-2024-06-12 13:29:22,823 - TrackingTest -INFO - PU Ready time is exist
-2024-06-12 13:29:22,868 - TrackingTest -INFO - PU Mileage==14
-2024-06-12 13:29:23,249 - TrackingTest -INFO - Entered DL Zip
-2024-06-12 13:29:28,367 - TrackingTest -INFO - Entered DL Address
-2024-06-12 13:29:28,686 - TrackingTest -INFO - Entered DL Company
-2024-06-12 13:29:29,059 - TrackingTest -INFO - Entered DL Address Line1
-2024-06-12 13:29:29,384 - TrackingTest -INFO - Entered DL Attention
-2024-06-12 13:29:29,814 - TrackingTest -INFO - Entered DL Phone
-2024-06-12 13:29:29,941 - TrackingTest -INFO - DL Miles==19
-2024-06-12 13:29:32,885 - TrackingTest -INFO - Entered Total Qty
-2024-06-12 13:29:33,118 - TrackingTest -INFO - Entered Weight
-2024-06-12 13:29:33,857 - TrackingTest -INFO - Entered Length
-2024-06-12 13:29:34,693 - TrackingTest -INFO - Entered Width
-2024-06-12 13:29:35,593 - TrackingTest -INFO - Entered Height
-2024-06-12 13:29:36,965 - TrackingTest -INFO - comodity dropdown is selected
-2024-06-12 13:29:43,566 - TrackingTest -INFO - Entered Commodity
-2024-06-12 13:29:46,695 - TrackingTest -INFO - Total Mileage==4
-2024-06-12 13:29:57,708 - TrackingTest -INFO - Click on Create Order button
-2024-06-12 13:30:12,558 - TrackingTest -INFO - Validation for Package is not displayed
-2024-06-12 13:30:12,729 - TrackingTest -INFO - =====Pickup =15595207=====
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 126.0.6478.127, chrome: {chromedriverVersion: 126.0.6478.126 (d36ace6122e..., userDataDir: C:\Users\rprajapati\AppData...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:50017}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:50017/devtoo..., se:cdpVersion: 126.0.6478.127, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: bf25d54ec89e2567f7912e64c3df403a
+2024-06-27 18:00:00,720 - TrackingTest -INFO - Click on Track button
+2024-06-27 18:00:02,816 - TrackingTest -INFO - Entered PickupID
+2024-06-27 18:00:28,261 - TrackingTest -INFO - org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.id: Print (tried for 20 second(s) with 500 milliseconds interval)
+2024-06-27 18:00:31,215 - TrackingTest -INFO - Connect Tracking PASS #15645942
+2024-06-27 18:00:33,506 - TrackingTest -INFO - Click on Track button
+2024-06-27 18:00:34,237 - TrackingTest -INFO - Entered PickupID
+2024-06-27 18:00:59,798 - TrackingTest -INFO - org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.id: Print (tried for 20 second(s) with 500 milliseconds interval)
+2024-06-27 18:01:02,525 - TrackingTest -INFO - MXTMS Tracking PASS #11216841
+2024-06-27 18:01:02,526 - TrackingTest -INFO - Env for execute script is : Prod
+2024-06-27 18:01:09,442 - TrackingTest -INFO - Entered UserName
+2024-06-27 18:01:10,856 - TrackingTest -INFO - Entered Password
+2024-06-27 18:01:12,000 - TrackingTest -INFO - Login done
+2024-06-27 18:01:24,893 - TrackingTest -INFO - Start process for job cancel
+2024-06-27 18:01:37,508 - TrackingTest -INFO - Clicked on Operations
+2024-06-27 18:01:37,781 - TrackingTest -INFO - Clicked on TaskLog
+2024-06-27 18:01:43,342 - TrackingTest -INFO - PickUpID=15645942
 
-2024-06-12 13:30:13,653 - TrackingTest -INFO - Clicked on Edit Order
-2024-06-12 13:30:25,817 - TrackingTest -INFO - Logout Message is displayed==You have successfully logged out!
-2024-06-12 13:30:25,817 - TrackingTest -INFO - Logout done
-2024-06-12 13:30:26,037 - TrackingTest -INFO - Env==Prod
-2024-06-12 13:30:29,005 - TrackingTest -INFO - https://mxtms.mnx.com/
-2024-06-12 13:30:32,205 - TrackingTest -INFO - Entered UserName
-2024-06-12 13:30:33,372 - TrackingTest -INFO - Entered Password
-2024-06-12 13:30:36,655 - TrackingTest -INFO - Login done
-2024-06-12 13:30:36,754 - TrackingTest -INFO - =====Service:- EGD=====
-2024-06-12 13:30:37,001 - TrackingTest -INFO - Click on Operations Tab
-2024-06-12 13:30:43,079 - TrackingTest -INFO - Click on Create Order
-2024-06-12 13:30:43,355 - TrackingTest -INFO - Enter Account Number
-2024-06-12 13:30:46,349 - TrackingTest -INFO - Enter Shipper
-2024-06-12 13:30:51,473 - TrackingTest -INFO - Pickup Zipcode=21225
-2024-06-12 13:30:53,998 - TrackingTest -INFO - Enter PickupZip
-2024-06-12 13:31:09,030 - TrackingTest -INFO - org.openqa.selenium.NoAlertPresentException: no such alert
-  (Session info: chrome-headless-shell=125.0.6422.142)
-Build info: version: '4.11.0', revision: '040bc5406b'
-System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '20'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [be0eb151bdf14094b44fdbdec0f62d4f, getAlertText {}]
-Capabilities {acceptInsecureCerts: false, browserName: chrome-headless-shell, browserVersion: 125.0.6422.142, chrome: {chromedriverVersion: 125.0.6422.141 (4b1e8393712..., userDataDir: C:\Users\RPRAJA~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:58937}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:58937/devtoo..., se:cdpVersion: 125.0.6422.142, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: be0eb151bdf14094b44fdbdec0f62d4f
-2024-06-12 13:31:09,031 - TrackingTest -INFO - Alert:-Would you like to override the curent pickup instructions with: AC PU,ADD LEV PU not displayed
-2024-06-12 13:31:09,093 - TrackingTest -INFO - Pickup timezone==USA-ET
-2024-06-12 13:31:09,094 - TrackingTest -INFO - Pickup timezone==ET
-2024-06-12 13:31:09,095 - TrackingTest -INFO - ZoneID of is==ET
-2024-06-12 13:31:09,096 - TrackingTest -INFO - 04:01
-2024-06-12 13:31:09,096 - TrackingTest -INFO - PU Time==04:01
-2024-06-12 13:31:11,220 - TrackingTest -INFO - ZoneID of is==ET
-2024-06-12 13:31:11,220 - TrackingTest -INFO - 04:01
-2024-06-12 13:31:11,363 - TrackingTest -INFO - Enter Ready PU Time
-2024-06-12 13:31:17,099 - TrackingTest -INFO - Enter DelZip
-2024-06-12 13:31:29,908 - TrackingTest -INFO - org.openqa.selenium.NoAlertPresentException: no such alert
-  (Session info: chrome-headless-shell=125.0.6422.142)
-Build info: version: '4.11.0', revision: '040bc5406b'
-System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '20'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [be0eb151bdf14094b44fdbdec0f62d4f, getAlertText {}]
-Capabilities {acceptInsecureCerts: false, browserName: chrome-headless-shell, browserVersion: 125.0.6422.142, chrome: {chromedriverVersion: 125.0.6422.141 (4b1e8393712..., userDataDir: C:\Users\RPRAJA~1\AppData\L...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:58937}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:58937/devtoo..., se:cdpVersion: 125.0.6422.142, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: be0eb151bdf14094b44fdbdec0f62d4f
-2024-06-12 13:31:29,908 - TrackingTest -INFO - Alert:-Would you like to override the curent pickup instructions with: AC PU,ADD LEV PU not displayed
-2024-06-12 13:31:36,750 - TrackingTest -INFO - Enter Service
-2024-06-12 13:31:43,081 - TrackingTest -INFO - Enter PCs
-2024-06-12 13:31:45,331 - TrackingTest -INFO - Enter Weight
-2024-06-12 13:31:45,525 - TrackingTest -INFO - Click on Pack
-2024-06-12 13:31:59,760 - TrackingTest -INFO - Select Pack
-2024-06-12 13:32:16,389 - TrackingTest -INFO - Enter Commodity
-2024-06-12 13:32:20,692 - TrackingTest -INFO - Enter Content
-2024-06-12 13:32:20,899 - TrackingTest -INFO - Click on QDT icon
-2024-06-12 13:32:28,560 - TrackingTest -INFO - Click on OK button of QDT popup
-2024-06-12 13:32:33,609 - TrackingTest -INFO - QD Time=06:30
-2024-06-12 13:32:33,648 - TrackingTest -INFO - QD Date=6/12/2024
-2024-06-12 13:32:33,688 - TrackingTest -INFO - QD Time=06:30
-2024-06-12 13:32:33,726 - TrackingTest -INFO - QD Date=6/12/2024
-2024-06-12 13:32:34,066 - TrackingTest -INFO - QDT calculation working=PASS
-2024-06-12 13:32:34,530 - TrackingTest -INFO - Click on Save button
-2024-06-12 13:32:44,323 - TrackingTest -INFO - Enter Source
-2024-06-12 13:32:44,728 - TrackingTest -INFO - Click on Save button
-2024-06-12 13:32:55,430 - TrackingTest -INFO - Message==Save was successful.
-2024-06-12 13:32:55,818 - TrackingTest -INFO - Order==ORDER #11191100
-2024-06-12 13:32:55,819 - TrackingTest -INFO - OrderID==11191100
-2024-06-12 13:32:56,211 - TrackingTest -INFO - Order==7392452
-2024-06-12 13:33:04,435 - TrackingTest -INFO - Logout done
-2024-06-12 13:33:09,445 - TrackingTest -INFO - Env==Prod
-2024-06-12 13:33:16,130 - TrackingTest -INFO - https://www.mnx.com/
-2024-06-12 13:33:32,554 - TrackingTest -INFO - Click on Accept All
-2024-06-12 13:33:34,966 - TrackingTest -INFO - Click on Track button
-2024-06-12 13:33:36,223 - TrackingTest -INFO - Entered PickupID
-2024-06-12 13:33:48,296 - TrackingTest -INFO - Connect Tracking PASS #15595207
-2024-06-12 13:33:50,564 - TrackingTest -INFO - Click on Track button
-2024-06-12 13:33:51,035 - TrackingTest -INFO - Entered PickupID
-2024-06-12 13:34:00,347 - TrackingTest -INFO - MXTMS Tracking PASS #11191100
-2024-06-12 13:34:00,348 - TrackingTest -INFO - Env for execute script is : Prod
-2024-06-12 13:34:05,911 - TrackingTest -INFO - Entered UserName
-2024-06-12 13:34:07,178 - TrackingTest -INFO - Entered Password
-2024-06-12 13:34:08,398 - TrackingTest -INFO - Login done
-2024-06-12 13:34:16,279 - TrackingTest -INFO - Start process for job cancel
-2024-06-12 13:34:28,335 - TrackingTest -INFO - Clicked on Operations
-2024-06-12 13:34:28,561 - TrackingTest -INFO - Clicked on TaskLog
-2024-06-12 13:34:33,434 - TrackingTest -INFO - PickUpID=15595207
+2024-06-27 18:01:51,900 - TrackingTest -INFO - Click on Edit Order Tab
+2024-06-27 18:02:02,778 - TrackingTest -INFO - Select job type : CANCEL/NC
+2024-06-27 18:02:10,287 - TrackingTest -INFO - Clicked on Save Changes button
+2024-06-27 18:02:12,745 - TrackingTest -INFO - Clicked on ok for cancel job confirmation
+2024-06-27 18:02:13,044 - TrackingTest -INFO - Entering Cancellation description
+2024-06-27 18:02:14,942 - TrackingTest -INFO - Click on Ok for Final Job cancel Confirmation
+2024-06-27 18:02:21,238 - TrackingTest -INFO - no addidtional popup up is display
+2024-06-27 18:02:21,603 - TrackingTest -INFO - Clicked on Operations
+2024-06-27 18:02:21,801 - TrackingTest -INFO - Clicked on TaskLog
+2024-06-27 18:02:24,386 - TrackingTest -INFO - Clicked on SearchAllJobs
+2024-06-27 18:02:29,911 - TrackingTest -INFO - Clicked on Reset button
+2024-06-27 18:02:30,163 - TrackingTest -INFO - 06/27/2024
+2024-06-27 18:02:30,379 - TrackingTest -INFO - Entered Origin From Date
+2024-06-27 18:02:30,491 - TrackingTest -INFO - 06/27/2024
+2024-06-27 18:02:30,710 - TrackingTest -INFO - Entered Origin From Date
+2024-06-27 18:02:30,968 - TrackingTest -INFO - Entered PickupID : 15645942
+2024-06-27 18:02:31,122 - TrackingTest -INFO - Click on Search button
+2024-06-27 18:02:32,405 - TrackingTest -INFO - Clicked on Record
+2024-06-27 18:02:39,013 - TrackingTest -INFO - Fetched Job status is : CANCEL
+2024-06-27 18:02:41,010 - TrackingTest -INFO - job is cancelled
+2024-06-27 18:02:41,011 - TrackingTest -INFO - job cancel process == PASS
+2024-06-27 18:02:41,083 - TrackingTest -INFO - Stage=CANCEL
+2024-06-27 18:02:41,084 - TrackingTest -INFO - Job Cancellation Process == pass
+2024-06-27 18:02:45,534 - TrackingTest -INFO - Logout Message is displayed==You have successfully logged out!
+2024-06-27 18:02:45,535 - TrackingTest -INFO - Logout done
+2024-06-27 18:02:45,654 - TrackingTest -INFO - Env==Prod
+2024-06-27 18:02:47,590 - TrackingTest -INFO - https://mxtms.mnx.com/
+2024-06-27 18:03:02,568 - TrackingTest -INFO - Click on Sign In with MNX
+2024-06-27 18:03:02,569 - TrackingTest -INFO - Login done
+2024-06-27 18:03:07,942 - TrackingTest -INFO - Operation Log is not Opened
+2024-06-27 18:03:08,235 - TrackingTest -INFO - Click on Operations Tab
+2024-06-27 18:03:40,076 - TrackingTest -INFO - Click on OPerations Log
+2024-06-27 18:03:40,516 - TrackingTest -INFO - OrderID=11216841
 
-2024-06-12 13:34:40,375 - TrackingTest -INFO - Click on Edit Order Tab
-2024-06-12 13:34:52,791 - TrackingTest -INFO - Select job type : CANCEL/NC
-2024-06-12 13:35:00,247 - TrackingTest -INFO - Clicked on Save Changes button
-2024-06-12 13:35:02,352 - TrackingTest -INFO - Clicked on ok for cancel job confirmation
-2024-06-12 13:35:02,500 - TrackingTest -INFO - Entering Cancellation description
-2024-06-12 13:35:04,358 - TrackingTest -INFO - Click on Ok for Final Job cancel Confirmation
-2024-06-12 13:35:09,145 - TrackingTest -INFO - no addidtional popup up is display
-2024-06-12 13:35:09,617 - TrackingTest -INFO - Clicked on Operations
-2024-06-12 13:35:09,961 - TrackingTest -INFO - Clicked on TaskLog
-2024-06-12 13:35:12,674 - TrackingTest -INFO - Clicked on SearchAllJobs
-2024-06-12 13:35:18,222 - TrackingTest -INFO - Clicked on Reset button
-2024-06-12 13:35:18,357 - TrackingTest -INFO - 06/12/2024
-2024-06-12 13:35:18,540 - TrackingTest -INFO - Entered Origin From Date
-2024-06-12 13:35:18,639 - TrackingTest -INFO - 06/12/2024
-2024-06-12 13:35:19,012 - TrackingTest -INFO - Entered Origin From Date
-2024-06-12 13:35:19,180 - TrackingTest -INFO - Entered PickupID : 15595207
-2024-06-12 13:35:19,358 - TrackingTest -INFO - Click on Search button
-2024-06-12 13:35:20,829 - TrackingTest -INFO - Clicked on Record
-2024-06-12 13:35:27,229 - TrackingTest -INFO - Fetched Job status is : CANCEL
-2024-06-12 13:35:30,156 - TrackingTest -INFO - job is cancelled
-2024-06-12 13:35:30,159 - TrackingTest -INFO - job cancel process == PASS
-2024-06-12 13:35:30,265 - TrackingTest -INFO - Stage=CANCEL
-2024-06-12 13:35:30,266 - TrackingTest -INFO - Job Cancellation Process == pass
-2024-06-12 13:35:35,642 - TrackingTest -INFO - Logout Message is displayed==You have successfully logged out!
-2024-06-12 13:35:35,643 - TrackingTest -INFO - Logout done
-2024-06-12 13:35:36,770 - TrackingTest -INFO - Env==Prod
-2024-06-12 13:35:40,545 - TrackingTest -INFO - https://mxtms.mnx.com/
-2024-06-12 13:35:44,029 - TrackingTest -INFO - Entered UserName
-2024-06-12 13:35:45,507 - TrackingTest -INFO - Entered Password
-2024-06-12 13:35:48,405 - TrackingTest -INFO - Login done
-2024-06-12 13:35:54,111 - TrackingTest -INFO - Operation Log is not Opened
-2024-06-12 13:35:54,848 - TrackingTest -INFO - Click on Operations Tab
-2024-06-12 13:36:28,472 - TrackingTest -INFO - Click on OPerations Log
-2024-06-12 13:36:29,249 - TrackingTest -INFO - OrderID=11191100
-
-2024-06-12 13:36:38,985 - TrackingTest -INFO - Job is displayed in edit job
-2024-06-12 13:36:46,711 - TrackingTest -INFO - Select Order as a CANCELLED
-2024-06-12 13:36:50,394 - TrackingTest -INFO - Enter Cancel Note
-2024-06-12 13:36:50,804 - TrackingTest -INFO - Click on Save button
-2024-06-12 13:36:56,125 - TrackingTest -INFO - Message==(CANCELLED)
-2024-06-12 13:36:56,125 - TrackingTest -INFO - Order Cancelled
-2024-06-12 13:37:02,416 - TrackingTest -INFO - Click on Save button
-2024-06-12 13:37:16,110 - TrackingTest -INFO - Logout done
-2024-06-12 13:37:22,175 - TrackingTest -INFO - ====Sending Email=====
+2024-06-27 18:03:54,113 - TrackingTest -INFO - Job is displayed in edit job
+2024-06-27 18:04:02,027 - TrackingTest -INFO - Select Order as a CANCELLED
+2024-06-27 18:04:04,834 - TrackingTest -INFO - Enter Cancel Note
+2024-06-27 18:04:05,246 - TrackingTest -INFO - Click on Save button
+2024-06-27 18:04:10,533 - TrackingTest -INFO - Message==(CANCELLED)
+2024-06-27 18:04:10,534 - TrackingTest -INFO - Order Cancelled
+2024-06-27 18:04:18,854 - TrackingTest -INFO - Click on Save button
+2024-06-27 18:04:32,122 - TrackingTest -INFO - Logout done
+2024-06-27 18:04:38,259 - TrackingTest -INFO - ====Sending Email=====

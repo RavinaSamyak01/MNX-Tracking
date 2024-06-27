@@ -95,7 +95,23 @@ public class BaseInit {
 			 */
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
+			// options.addArguments("--headless", "--window-size=1920, 1080");
+			String RunConf = storage.getProperty("RunConf");
+			logs.info("RunConf==" + RunConf);
 
+			String userProfile = null;
+			if (RunConf.equalsIgnoreCase("local")) {
+				userProfile = "user-data-dir=C:\\Users\\rprajapati\\AppData\\Local\\Google\\Chrome\\User";
+
+			} else if (RunConf.equalsIgnoreCase("Pipeline")) {
+				userProfile = "user-data-dir=C:/Users/samyakldr/AppData/Local/Google/Chrome/User Data/Profile 3";
+
+			}
+			// options.setBinary("/usr/bin/google-chrome-stable"); //chrome binary location
+			// specified here
+			// System.setProperty("webdriver.chrome.driver",
+			// "D:\\chromedriver-win64\\chromedriver");
+			options.addArguments(userProfile);
 			options.addArguments("--headless", "--window-size=1920, 1080");
 			options.addArguments("--window-size=1920, 1080");
 			options.addArguments("start-maximized"); // open Browser in maximized mode

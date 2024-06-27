@@ -17,13 +17,15 @@ import mnx_BasePackage.BaseInit;
 
 public class track_MXTMS extends BaseInit {
 
-	public void oc_MXTMS() throws Exception {
+	public String oc_MXTMS() throws Exception {
 
 		mxtmslogin();
 
-		mxtms_createOrder();
+		String MXResult = mxtms_createOrder();
 
 		logOut();
+
+		return MXResult;
 
 	}
 
@@ -38,7 +40,10 @@ public class track_MXTMS extends BaseInit {
 	}
 
 	public void mxtmslogin() throws InterruptedException, IOException {
-		WebDriverWait wait = new WebDriverWait(driver, 15);
+		JavascriptExecutor js = (JavascriptExecutor) driver;// scroll,click
+		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
+		Actions act = new Actions(driver);
+		WebDriverWait wait1 = new WebDriverWait(driver, 5);// wait time
 
 		String Env = storage.getProperty("Env");
 		logs.info("Env==" + Env);
@@ -47,27 +52,38 @@ public class track_MXTMS extends BaseInit {
 			String baseUrl = storage.getProperty("MXTMSPRODURL");
 			driver.get(baseUrl);
 			logs.info(baseUrl);
-			msg.append("\n" + "URL==" + baseUrl + "\n");
-
 			Thread.sleep(2000);
 			try {
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("rpLogin_RPC")));
-				String UserName = storage.getProperty("MXTMSPRODUserName");
-				highLight(isElementPresent("UserName_id"), driver);
-				isElementPresent("UserName_id").sendKeys(UserName);
-				logs.info("Entered UserName");
-				String Password = storage.getProperty("MXTMSPRODPassword");
-				highLight(isElementPresent("Password_id"), driver);
-				isElementPresent("Password_id").sendKeys(Password);
-				logs.info("Entered Password");
+				// --Click on SignIn with MNX
+				WebElement SignMNX = isElementPresent("MXSignInwithMNX_id");
+				act.moveToElement(SignMNX).build().perform();
+				wait1.until(ExpectedConditions.visibilityOf(SignMNX));
+				wait1.until(ExpectedConditions.elementToBeClickable(SignMNX));
+				js.executeScript("arguments[0].click();", SignMNX);
+				System.out.println("Click on SignIn with MNX");
+				logs.info("Click on Sign In with MNX");
+
+				// Thread.sleep(30000);
+
+				// --Wait for microsoft login screen
+				// wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@id=\"lightbox\"]")));
+
+				/*
+				 * // --Enter UserName String AUserName=storage.getProperty("AUserName");
+				 * WebElement AEmail = isElementPresent("AzEmail_id");
+				 * wait1.until(ExpectedConditions.visibilityOf(AEmail));
+				 * wait1.until(ExpectedConditions.elementToBeClickable(AEmail)); AEmail.clear();
+				 * AEmail.sendKeys(""); logs.info("Enter Account Number");
+				 */
+
 			} catch (Exception e) {
 				msg.append("URL is not working==FAIL");
 				getScreenshot(driver, "LoginPageIssue");
 				driver.quit();
 				Env = storage.getProperty("Env");
-				String File = ".\\Report\\MNX_Screenshot\\LoginPageIssue.png";
+				String File = ".\\Report\\Screenshots\\MXTMS-Stage-Screenshot\\LoginPageIssue.png";
 				Env = storage.getProperty("Env");
-				String subject = "Selenium Automation Script:" + Env + " MNX Tracking";
+				String subject = "Selenium Automation Script:" + Env + " MXTMS Smoke";
 
 				try {
 					mnx_BasePackage.SendEmail.sendMail(EmailID, subject, msg.toString(), File);
@@ -79,8 +95,7 @@ public class track_MXTMS extends BaseInit {
 			}
 
 		}
-		highLight(isElementPresent("SignIn_id"), driver);
-		isElementPresent("SignIn_id").click();
+
 		logs.info("Login done");
 
 		try {
@@ -122,7 +137,7 @@ public class track_MXTMS extends BaseInit {
 
 	}
 
-	public void mxtms_createOrder() throws IOException {
+	public String mxtms_createOrder() throws IOException {
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;// scroll,click
 		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
@@ -130,6 +145,7 @@ public class track_MXTMS extends BaseInit {
 		WebDriverWait wait1 = new WebDriverWait(driver, 7);// wait time
 
 		String ServiceID = null;
+		String Result = null;
 
 		try {
 			// --Get Service
@@ -472,7 +488,7 @@ public class track_MXTMS extends BaseInit {
 					String SUccMsg = Savesucc.getText();
 					logs.info("Message==" + SUccMsg);
 					System.out.println("Message==" + SUccMsg);
-
+					Result = "PASS";
 					// --get OrderID
 					WebElement GEToRDERid = isElementPresent("OCOrderID_id");
 					wait.until(ExpectedConditions.visibilityOf(GEToRDERid));
@@ -511,6 +527,7 @@ public class track_MXTMS extends BaseInit {
 					logs.info("Issue with save button");
 					// setResultData("Result", 1, 4, ee.getMessage());
 					// setResultData("Result", 1, 3, "FAIL");
+					Result = "FAIL";
 
 				}
 
@@ -521,12 +538,16 @@ public class track_MXTMS extends BaseInit {
 				logs.info("Issue with save button");
 				setData("MXTMS", 1, 3, "FAIL");
 				// setResultData("Result", 1, 3, "FAIL");
+				Result = "FAIL";
 
 			}
 		} catch (Exception e) {
 			logs.info(e);
 			getScreenshot(driver, "CreateOrderIssue_");
+			Result = "FAIL";
+
 		}
+		return Result;
 
 	}
 
@@ -589,7 +610,7 @@ public class track_MXTMS extends BaseInit {
 	public void getQDT(int i) throws InterruptedException, IOException, EncryptedDocumentException,
 			InvalidFormatException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
-		WebDriverWait wait = new WebDriverWait(driver, 15);// wait time
+		WebDriverWait wait = new WebDriverWait(driver, 30);// wait time
 		Actions act = new Actions(driver);
 		WebDriverWait wait1 = new WebDriverWait(driver, 10);
 

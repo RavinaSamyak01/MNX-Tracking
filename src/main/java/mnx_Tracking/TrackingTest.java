@@ -23,19 +23,22 @@ public class TrackingTest extends BaseInit {
 
 		try {
 			// --create Connect Job
-			TC.oc_Connect();
+			String COC = TC.oc_Connect();
 
 			// --create MXTMS job
-			TM.oc_MXTMS();
+			String MOC = TM.oc_MXTMS();
 
-			// --MNX Tracking
-			mnx_Tracking();
+			if (COC.equalsIgnoreCase("PASS") || MOC.equalsIgnoreCase("PASS")) {
+				// --MNX Tracking
+				mnx_Tracking();
 
-			// --Cancel connect job
-			TC.oCancel_Connect();
+				// --Cancel connect job
+				TC.oCancel_Connect();
 
-			// --cancel MXTMS job
-			TM.oCancel_MXTMS();
+				// --cancel MXTMS job
+				TM.oCancel_MXTMS();
+
+			}
 
 		} catch (Exception e) {
 			logs.info(e);
@@ -144,9 +147,9 @@ public class TrackingTest extends BaseInit {
 				jse.executeScript("arguments[0].click();", Track);
 				Thread.sleep(5000);
 
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Print")));
-
 				try {
+					wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("Print")));
+
 					WebElement TrackDiv = isElementPresent("MNXTrackDiv_xpath");
 					act.moveToElement(TrackDiv).build().perform();
 					wait.until(ExpectedConditions.visibilityOf(TrackDiv));
@@ -158,8 +161,8 @@ public class TrackingTest extends BaseInit {
 				} catch (Exception e) {
 					logs.info(e);
 					fullpageScreenshot(Module + "Tracking_Issue" + Pickup);
-					logs.info(Module + " Tracking PASS #" + Pickup);
-					msg.append(Module + " Tracking PASS #" + Pickup + "\n");
+					logs.info(Module + " Tracking FAIL #" + Pickup);
+					msg.append(Module + " Tracking FAIL #" + Pickup + "\n");
 
 				}
 

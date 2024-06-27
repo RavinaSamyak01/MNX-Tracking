@@ -2,16 +2,16 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-06-12T13:28:26 IST" name="MNX Tracking" finished-at="2024-06-12T13:37:21 IST" duration-ms="534630">
+  <suite started-at="2024-06-27T17:59:20 IST" name="Default suite" finished-at="2024-06-27T18:04:37 IST" duration-ms="316928">
     <groups>
     </groups>
-    <test started-at="2024-06-12T13:28:26 IST" name="MNX Tracking" finished-at="2024-06-12T13:37:21 IST" duration-ms="534630">
+    <test started-at="2024-06-27T17:59:20 IST" name="Default test" finished-at="2024-06-27T18:04:37 IST" duration-ms="316928">
       <class name="mnx_Tracking.TrackingTest">
-        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:mnx_Tracking.TrackingTest@40a4337a]" started-at="2024-06-12T13:28:21 IST" name="beforeMethod" finished-at="2024-06-12T13:28:26 IST" duration-ms="5372" status="PASS">
+        <test-method is-config="true" signature="beforeMethod()[pri:0, instance:mnx_Tracking.TrackingTest@6d60fe40]" started-at="2024-06-27T17:59:10 IST" name="beforeMethod" finished-at="2024-06-27T17:59:20 IST" duration-ms="10195" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method is-config="true" signature="testMethodName(java.lang.reflect.Method)[pri:0, instance:mnx_Tracking.TrackingTest@40a4337a]" started-at="2024-06-12T13:28:26 IST" name="testMethodName" finished-at="2024-06-12T13:28:26 IST" duration-ms="43" status="PASS">
+        <test-method is-config="true" signature="testMethodName(java.lang.reflect.Method)[pri:0, instance:mnx_Tracking.TrackingTest@6d60fe40]" started-at="2024-06-27T17:59:20 IST" name="testMethodName" finished-at="2024-06-27T17:59:20 IST" duration-ms="16" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -22,26 +22,26 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testMethodName -->
-        <test-method signature="test_Tracking()[pri:0, instance:mnx_Tracking.TrackingTest@40a4337a]" started-at="2024-06-12T13:28:26 IST" name="test_Tracking" finished-at="2024-06-12T13:37:21 IST" duration-ms="534261" status="PASS">
+        <test-method signature="test_Tracking()[pri:0, instance:mnx_Tracking.TrackingTest@6d60fe40]" started-at="2024-06-27T17:59:20 IST" name="test_Tracking" finished-at="2024-06-27T18:04:37 IST" duration-ms="316682" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- test_Tracking -->
-        <test-method is-config="true" signature="getResult(org.testng.ITestResult)[pri:0, instance:mnx_Tracking.TrackingTest@40a4337a]" started-at="2024-06-12T13:37:21 IST" name="getResult" finished-at="2024-06-12T13:37:21 IST" duration-ms="201" status="PASS">
+        <test-method is-config="true" signature="getResult(org.testng.ITestResult)[pri:0, instance:mnx_Tracking.TrackingTest@6d60fe40]" started-at="2024-06-27T18:04:37 IST" name="getResult" finished-at="2024-06-27T18:04:37 IST" duration-ms="140" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=test_Tracking status=SUCCESS method=TrackingTest.test_Tracking()[pri:0, instance:mnx_Tracking.TrackingTest@40a4337a] output={null}]]]>
+                <![CDATA[[TestResult name=test_Tracking status=SUCCESS method=TrackingTest.test_Tracking()[pri:0, instance:mnx_Tracking.TrackingTest@6d60fe40] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getResult -->
-        <test-method is-config="true" signature="SendEmail()[pri:0, instance:mnx_Tracking.TrackingTest@40a4337a]" started-at="2024-06-12T13:37:21 IST" name="SendEmail" finished-at="2024-06-12T13:37:23 IST" duration-ms="1772" status="PASS">
+        <test-method is-config="true" signature="SendEmail()[pri:0, instance:mnx_Tracking.TrackingTest@6d60fe40]" started-at="2024-06-27T18:04:37 IST" name="SendEmail" finished-at="2024-06-27T18:04:39 IST" duration-ms="1872" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- SendEmail -->
       </class> <!-- mnx_Tracking.TrackingTest -->
-    </test> <!-- MNX Tracking -->
-  </suite> <!-- MNX Tracking -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>

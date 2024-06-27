@@ -24,13 +24,15 @@ import mnx_BasePackage.BaseInit;
 
 public class track_Connect extends BaseInit {
 
-	public void oc_Connect() throws Exception {
+	public String oc_Connect() throws Exception {
 
 		login();
 
-		orderCreation();
+		String ConnectResult = orderCreation();
 
 		logOut();
+
+		return ConnectResult;
 
 	}
 
@@ -138,7 +140,7 @@ public class track_Connect extends BaseInit {
 
 	}
 
-	public void orderCreation()
+	public String orderCreation()
 			throws EncryptedDocumentException, InvalidFormatException, IOException, AWTException, InterruptedException {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;// scroll,click
 		WebDriverWait wait = new WebDriverWait(driver, 20);// wait time
@@ -149,6 +151,7 @@ public class track_Connect extends BaseInit {
 
 		Robot r = new Robot();
 		String ServiceID = null;
+		String Result = null;
 		try {
 			// --Go to Operation
 			WebElement operation = isElementPresent("OperMenu_id");
@@ -663,6 +666,8 @@ public class track_Connect extends BaseInit {
 			// --Set PickUPID
 			setData("Connect", 1, 32, pck);
 
+			Result = "PASS";
+
 			// --Click on Edit Order
 			WebElement EditOrder = isElementPresent("OCEditOrder_id");
 			wait1.until(ExpectedConditions.elementToBeClickable(EditOrder));
@@ -680,6 +685,8 @@ public class track_Connect extends BaseInit {
 			}
 		} catch (Exception e) {
 			logs.error(e);
+			Result = "FAIL";
+
 			msg.append("Issue in Create Order for Service==" + ServiceID + "\n");
 			getScreenshot(driver, "CreateOrder_" + ServiceID);
 
@@ -697,6 +704,8 @@ public class track_Connect extends BaseInit {
 			logs.info("Issue in Create Order");
 			getScreenshot(driver, "CreateOrderIssue");
 		}
+
+		return Result;
 
 	}
 
@@ -817,7 +826,7 @@ public class track_Connect extends BaseInit {
 		getScreenshot(driver, "canceljob_type_" + i);
 
 		String PUID = getData("Connect", 1, 32);
-		//msg.append("PickupID=" + PUID + "\n");
+		// msg.append("PickupID=" + PUID + "\n");
 
 		if (Env.equalsIgnoreCase("PROD")) {
 
@@ -1083,7 +1092,7 @@ public class track_Connect extends BaseInit {
 				String PUID = getData("Connect", i, 32);
 
 				logs.info("PickUpID=" + PUID + "\n");
-				msg.append("\n"+"PickupID=" + PUID + "\n");
+				msg.append("\n" + "PickupID=" + PUID + "\n");
 
 				isElementPresent("TLSearch_id").clear();
 				isElementPresent("TLSearch_id").sendKeys(PUID);
